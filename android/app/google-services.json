@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "134707875808",
+    "project_id": "aawaz-88ff7",
+    "storage_bucket": "aawaz-88ff7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134707875808:android:e276647828146d3e4d2585",
+        "android_client_info": {
+          "package_name": "com.aawaz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9-W6AdIiDLNBqAhOpnYJItIgZMoyi4YQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
