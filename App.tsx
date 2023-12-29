@@ -6,6 +6,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import SplashScreen from './src/screens/SplashScreen';
+import AskWho from './src/screens/AskWho';
 import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import HomeScreen from './src/screens/HomeScreen';
@@ -107,6 +108,11 @@ const App = () => {
           options={{headerShown: false}}
           name="Splash"
           component={SplashScreen}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="Askwho"
+          component={AskWho}
         />
         <Stack.Screen
           options={{headerShown: false}}
