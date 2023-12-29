@@ -11,6 +11,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import StationDetails from './src/screens/StationDetails';
 
 import * as colors from './src/components/color';
 
@@ -136,6 +137,12 @@ const App = () => {
           options={{headerShown: false}}
           name="HomeScreen"
           component={HomeScreen}
+        />
+        
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="StationDetails"
+          component={StationDetails}
         />
       </Stack.Navigator>
     </NavigationContainer>

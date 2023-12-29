@@ -6,11 +6,13 @@ import {
   Image,
   ScrollView,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import CarouselComponent from '../components/CarouselComponent';
 
 import * as colors from '../components/color';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 const carouselData = [
   {
@@ -48,24 +50,27 @@ const recentFeedbacks = [
   {
     id: 1,
     userName: 'User 1',
-    image: 'https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image:
+      'https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     feedback: 'Great experience with the police station!',
   },
   {
     id: 2,
     userName: 'User 2',
-    image: 'https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image:
+      'https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     feedback: 'Quick response and helpful staff.',
   },
   {
     id: 3,
     userName: 'User 3',
-    image: 'https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image:
+      'https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     feedback: 'Could improve the waiting time.',
   },
 ];
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   return (
     <ScrollView style={styles.container}>
       <SearchBar
@@ -80,42 +85,30 @@ const HomeScreen = () => {
       <View style={styles.sectionContainer}>
         <Text style={styles.sectionTitle}>Top Rated Police Stations</Text>
         {topRatedPoliceStations.map(station => (
-          <View key={station.id} style={styles.policeStationCard}>
+          <TouchableOpacity key={station.id} style={styles.policeStationCard} onPress={() => {navigation.navigate('StationDetails')}}>
             <Image source={{uri: station.image}} style={styles.cardImage} />
             <View style={styles.policeTextContainer}>
               <Text style={styles.cardTitle}>{station.name}</Text>
               <Text
                 style={styles.cardRating}>{`Rating: ${station.rating}`}</Text>
             </View>
+          </TouchableOpacity>
+        ))}
+      </View>
+      
+      <View style={styles.feedbacksContainer}>
+        <Text style={styles.feedbackTitle}>Recent Feedbacks</Text>
+        {recentFeedbacks.map(feedback => (
+          <View key={feedback.id} style={styles.feedbackCard}>
+            <Image source={{uri: feedback.image}} style={styles.cardImage} />
+            <View style={styles.feedbackTextContainer}>
+              <Text style={styles.cardTitle}>{feedback.userName}</Text>
+              <Text style={styles.cardRating}>{feedback.feedback}</Text>
+            </View>
           </View>
         ))}
       </View>
-
-      <View style={styles.sectionContainer2}>
-        <Text style={styles.sectionTitle2}>Recent Feedbacks</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {recentFeedbacks.map(feedback => (
-            <View key={feedback.id} style={styles.feedbackCard}>
-              <View style={styles.feedbackTopSection}>
-                <Image
-                  source={{uri: feedback.image}}
-                  style={styles.feedbackImage}
-                />
-                <Text style={styles.feedbackUserName}>{feedback.userName}</Text>
-              </View>
-
-              <View style={styles.feedbackContent}>
-
-              </View>
-
-              <View style={styles.feedbackBottomSection}>
-
-              </View>
-
-            </View>
-          ))}
-        </ScrollView>
-      </View>
+      
     </ScrollView>
   );
 };
@@ -164,12 +157,6 @@ const styles = StyleSheet.create({
   policeTextContainer: {
     marginLeft: 15,
   },
-  feedbackCard: {
-    flexDirection: 'column',
-    marginRight: 16,
-    justifyContent: 'space-between',
-    width: "100%"
-  },
   cardImage: {
     width: 70,
     height: 70,
@@ -189,27 +176,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
   },
-  sectionContainer2: {
-    marginBottom: 106,
-  },
-  sectionTitle2: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    marginTop: -20,
-    color: '#000',
-  },
-  feedbackTopSection:{
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  feedbackImage: {
-    width: 30,
-    height: 30,
-    borderRadius: 50,
-    marginRight: 8,
-  },
+  
 });
 
 export default HomeScreen;
