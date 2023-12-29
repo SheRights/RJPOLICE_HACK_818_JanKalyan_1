@@ -1,7 +1,7 @@
 # Aawaz - Voice to Every Indiviual 
 
 
-<img src="https://static.wixstatic.com/media/9c5d56_fff85c81cc66455fbb8a88bcfe5a307d~mv2.png/v1/fill/w_640,h_512,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/9c5d56_fff85c81cc66455fbb8a88bcfe5a307d~mv2.png" alt="Aawaz - Voice to Every Indiviual " width="100%" height=600>
+<img src="feedback illustration.jpg" alt="Aawaz - Voice to Every Indiviual " width="100%" height=600>
 
 
 ## Table of Contents
@@ -21,7 +21,6 @@ Aawaz is a  user-friendly, cost-effective Police Feedback System designed to hel
 ## The app contains following three Modules. 
 
 ### <ol> <li> User Module 👤 </li> </ol> 
-
 User Module is for common people, who are supposed to add public feedback for the police stations. In this module user can see the most rated police station in order of, number of feedbacks and rating out of 5. User can see the feedbacks given by other users as well. Along with this user can manage his profile in the login itself. 
 
 
@@ -74,14 +73,8 @@ Users engage with each other's feedback, adding comments and reactions, fosterin
 ### <ol start=10> <li>Data Analysis:  </li> </ol> 
 The dashboard displays feedback data through charts and graphs, allowing for effective analysis with multiple filters such as highest, lowest, recent, and oldest.
 
-### <ol start=11> <li>Inclusive Language Processing:  </li> </ol> 
-• System: Natural language processing algorithms identify and address biased or
-discriminatory language in feedback, ensuring a fair and inclusive platform.
-
-
-### <ol start=12> <li>Secure Data Storage:  </li> </ol> 
-• System: The platform ensures secure data storage in compliance with data protection
-laws (specially encrypting the data while storing it), prioritizing user privacy and
+### <ol start=11> <li>Secure Data Storage:  </li> </ol> 
+The platform ensures secure data storage in compliance with data protection laws (specially encrypting the data while storing it), prioritizing user privacy and
 information security
 
 
