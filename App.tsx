@@ -12,6 +12,8 @@ import SignupScreen from './src/screens/SignupScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 
+import * as colors from './src/components/color';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -32,7 +34,7 @@ const CustomTabBarButton = ({ children, onPress }: {
         width: 58,
         height: 58,
         borderRadius: 35,
-        backgroundColor: '#5D5FEF',
+        backgroundColor: colors.secondary,
         elevation: 5
       }}>
       {children}
@@ -46,7 +48,7 @@ const TabNavi = ({}) => {
     <Tab.Navigator
       screenOptions={{
         tabBarHideOnKeyboard: true,
-        tabBarActiveTintColor: '#5D5FEF',
+        tabBarActiveTintColor: '#000',
         tabBarShowLabel: false,
         tabBarStyle: {
           position: 'absolute',
@@ -54,7 +56,7 @@ const TabNavi = ({}) => {
           left: 20,
           right: 20,
           elevation: 8,
-          backgroundColor: '#EEEEFF',
+          backgroundColor: colors.primary,
           borderRadius: 15,
           height: 60,
         },
@@ -78,7 +80,7 @@ const TabNavi = ({}) => {
             <FontAwesome5
               name="plus"
               size={22}
-              color={focused ? '#FFF' : '#f2f2f2'}
+              color={focused ? '#000' : 'grey'}
             />
           ),
           tabBarButton: props => (

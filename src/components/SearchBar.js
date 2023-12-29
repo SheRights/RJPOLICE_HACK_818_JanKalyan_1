@@ -1,14 +1,16 @@
 import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Import the appropriate icon from the library
+import Icon from 'react-native-vector-icons/FontAwesome'; 
+import * as colors from '../components/color';
 
 const SearchBar = ({ placeholder, onSearch }) => {
   return (
     <View style={styles.searchBarContainer}>
-      <Icon name="search" size={20} color="#888" style={styles.searchIcon} />
+      <Icon name="search" size={20} color="#000" style={styles.searchIcon} />
       <TextInput
         style={styles.searchInput}
         placeholder={placeholder || 'Search...'}
+        placeholderTextColor={'#000'}
         onChangeText={onSearch}
       />
     </View>
@@ -18,12 +20,14 @@ const SearchBar = ({ placeholder, onSearch }) => {
 const styles = StyleSheet.create({
   searchBarContainer: {
     flexDirection: 'row',
+    backgroundColor: colors.primary,
     alignItems: 'center',
-    borderColor: '#ddd',
+    borderColor: colors.primary,
     borderWidth: 1,
     borderRadius: 20,
     paddingHorizontal: 16,
     marginBottom: 16,
+    color: '#000',
   },
   searchIcon: {
     marginRight: 8,

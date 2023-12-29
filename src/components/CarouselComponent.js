@@ -34,12 +34,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 150, 
     borderRadius: 8,
-    overflow: 'hidden', // Ensure the image is clipped to the rounded corners
+    overflow: 'hidden', 
   },
   image: {
     flex: 1,
-    width: '100%',
+    width: '75%',
     height: '100%', 
+    borderRadius: 20,
   },
 });
 
