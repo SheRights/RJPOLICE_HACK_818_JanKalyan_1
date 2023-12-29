@@ -1,7 +1,7 @@
 # Aawaz - Voice to Every Indiviual 
 
 
-<img src="feedback illustration.jpg" alt="Aawaz - Voice to Every Indiviual " width="100%" height=600>
+<img src="Feedback Illustration.jpg" alt="Aawaz - Voice to Every Indiviual " align="middle" width="90%" height=500>
 
 
 ## Table of Contents
@@ -16,9 +16,9 @@
 </ol>
 
 ## Introduction
-Aawaz is a  user-friendly, cost-effective Police Feedback System designed to help every indiviual give his/her feedback to Police Staion.
+Aawaz is a  user-friendly, cost-effective Police Feedback System designed to help every indiviual give his/her feedback to Police Staion.  
 
-## The app contains following three Modules. 
+## Modules: The system contains following 3 Modules. 
 
 ### <ol> <li> User Module 👤 </li> </ol> 
 User Module is for common people, who are supposed to add public feedback for the police stations. In this module user can see the most rated police station in order of, number of feedbacks and rating out of 5. User can see the feedbacks given by other users as well. Along with this user can manage his profile in the login itself. 
@@ -27,62 +27,52 @@ User Module is for common people, who are supposed to add public feedback for th
 ### <ol start=2> <li> Police Station Module 🚨 </li> </ol> 
 The Module for Police station allows Police Stations to see and manage the feedback received to them. For ensuring the authenticity and clarity of the application, we have incorporated a report button for reviews. This functionality enables Police Stations to report feedback that may be irrelevant or unrelated to actual experiences with the police station, this makes a more accurate and reliable feedback system. 
 
+<!--
 <p align="left">
 <img src="question.jpeg" alt="Logo" width="190" height="350">
 <img src="severity.jpg" alt="Logo" width="190" height="350">
-</p>
+</p> -->
 
 ### <ol start=3> <li> Admin Module 📝 </li> </ol> 
 The Admin Module of system give super interface. In which all the registered police stations can seen and managed. Admin has right to approve the police station on the platform, only after Admin's approval police station get onboarded to the system.
-
-<p align="left">
-<img src="awareness.jpg" alt="Logo" width="190" height="350">
-<img src="AwarnessSoln.jpeg" alt="Logo" width="190" height="350">
-</p>
 
 ## Features
 
 ### <ol> <li>User-Friendly Interface 📱 </li> </ol> 
 The app is user-friendly and easy to navigate. Users can access all features of the application easily, and the interface is designed to be simple and intuitive.
 
-### <ol start=2> <li>User Registration and Login: </li> </ol> 
+### <ol start=2> <li>User Registration and Login </li> </ol> 
 The user starts by registering on the platform, and providing necessary details.To ensure authenticity, they verify their account either through email or SMS.
 
-### <ol start=3> <li>Independent Dashboard Access:  </li> </ol> 
+### <ol start=3> <li>Independent Dashboard Access  </li> </ol> 
 User/Police Station/Admin: Each user type accesses a dedicated dashboard with features relevant to their role, enhancing usability.
 
-### <ol start=4><li>Accessibility Features (For physically challenged people):  </li> </ol> 
+### <ol start=4><li>Accessibility Features (For physically challenged people) </li> </ol> 
 The feedback system is designed to be accessible to individuals with disabilities, supporting screen readers and other assistive technologies for a more
 inclusive user experience.
 
-### <ol start=5> <li>Gamification:  </li> </ol> 
+### <ol start=5> <li>Gamification</li> </ol> 
 Police station on the system are ranked based on the number of feedback received and rating out of 5, fostering a healthy and competitive environment on the platform.
 
-### <ol start=6> <li>Anonymity Option:  </li> </ol> 
+### <ol start=6> <li>Anonymity Option </li> </ol> 
 Users can submit feedback anonymously, promoting honest and unbiased contributions.
 
-### <ol start=7> <li>User Engagement:  </li> </ol> 
+### <ol start=7> <li>User Engagement </li> </ol> 
 Regular notifications keep users, police stations, and admins engaged with updates and relevant activities on the platform.
 
-### <ol start=8> <li>Generating Review Links:  </li> </ol> 
+### <ol start=8> <li>Generating Review Links</li> </ol> 
 Unique review links are generated for each police station, which can be provided to users to add feedback directly to that police station
 
-### <ol start=9> <li>Community Interaction:  </li> </ol> 
+### <ol start=9> <li>Community Interaction </li> </ol> 
 Users engage with each other's feedback, adding comments and reactions, fostering a sense of community on the platform.
 
-### <ol start=10> <li>Data Analysis:  </li> </ol> 
+### <ol start=10> <li>Data Analysis  </li> </ol> 
 The dashboard displays feedback data through charts and graphs, allowing for effective analysis with multiple filters such as highest, lowest, recent, and oldest.
 
-### <ol start=11> <li>Secure Data Storage:  </li> </ol> 
+### <ol start=11> <li>Secure Data Storage </li> </ol> 
 The platform ensures secure data storage in compliance with data protection laws (specially encrypting the data while storing it), prioritizing user privacy and
 information security
 
-
-
-<p align="left">
-<img src="police.jpeg" alt="Logo" width="190" height="350">
-<img src="ngo.jpeg" alt="Logo" width="190" height="350">
-</p>
 
 
 ## Installation
