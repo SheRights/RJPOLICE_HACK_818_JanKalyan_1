@@ -9,6 +9,7 @@ import SplashScreen from './src/screens/SplashScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import HomeScreen from './src/screens/HomeScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -65,7 +66,7 @@ const TabNavi = ({}) => {
           },
         }}
         name="HomeScreen"
-        component={SplashScreen}
+        component={HomeScreen}
       />
       <Tab.Screen
         name="TestScreen"
@@ -93,7 +94,7 @@ const TabNavi = ({}) => {
           },
         }}
         name="Profile"
-        component={SplashScreen}
+        component={ProfileScreen}
       />
     </Tab.Navigator>
   );
