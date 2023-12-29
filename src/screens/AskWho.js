@@ -30,7 +30,7 @@ const AskWho = ({navigation}) => {
             return (
               <TouchableOpacity key={index} style={styles.card} onPress={()=>{navigation.navigate('Login')}}>
                 <View style={styles.cardAlign}>
-                  <Image source={{uri: "https://cdn-icons-png.flaticon.com/512/149/149071.png"}} style={styles.cardimage} />
+                  <Image source={{uri: item.image}} style={styles.cardimage} />
                   <View>
                   <Text style={styles.cardtitle}>{item.name}</Text>
                     <Text style={styles.carddescription}>{item.description}</Text>
