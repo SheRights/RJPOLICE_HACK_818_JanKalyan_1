@@ -1,7 +1,7 @@
 # Aawaz - Voice to Every Indiviual 
 
 
-<img src="Feedback Illustration.jpg" alt="Aawaz - Voice to Every Indiviual " align="middle" width="90%" height=500>
+<img src=fdi.jpg" alt="Aawaz - Voice to Every Indiviual " align="middle" width="90%" height=500>
 
 
 ## Table of Contents
