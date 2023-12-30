@@ -69,7 +69,7 @@ const LoginScreen = ({route, navigation}) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={{flex: 1, backgroundColor: colors.secondary}}>
       <View style={styles.container}>
         <View style={styles.UpperContainer}>
           <View style={styles.LabelConatiner}></View>
