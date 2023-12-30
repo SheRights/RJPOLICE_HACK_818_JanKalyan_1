@@ -7,7 +7,7 @@ import {
   Touchable,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import * as colors from '../components/color';
 
 const cardcontent = [
@@ -42,7 +42,7 @@ const AskWho = ({navigation}) => {
               key={index}
               style={styles.card}
               onPress={() => {
-                navigation.navigate('Login');
+                navigation.navigate('Login', {who: item.name});
               }}>
               <View style={styles.cardAlign}>
                 <Image source={{uri: item.image}} style={styles.cardimage} />

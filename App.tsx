@@ -74,10 +74,10 @@ const TabNavi = ({}) => {
         component={HomeScreen}
       />
       <Tab.Screen
-        name="TestScreen"
-        component={HomeScreen}
+        name="Feedback"
+        component={FeedBackScreen}
         options={{
-          headerShown: false,
+          headerShown: true,
           tabBarIcon: ({focused}) => (
             <FontAwesome5
               name="plus"

@@ -10,8 +10,13 @@ import {
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import * as colors from '../components/color';
+import { ScrollView } from 'react-native';
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({route, navigation}) => {
+
+  const { who } = route.params;
+  console.log(who);
+
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
 
@@ -57,7 +62,8 @@ const LoginScreen = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView>
+      <View style={styles.container}>
       <View style={styles.UpperContainer}>
         <View style={styles.LabelConatiner}>
         </View>
@@ -97,7 +103,10 @@ const LoginScreen = ({navigation}) => {
         </View>
       </View>
 
-      <View style={styles.LowerContainerContent}>
+      {who === 'Admin' ? (
+        <View style={styles.LowerContainerContent}></View>
+      ):(
+        <View style={styles.LowerContainerContent}>
         <View style={styles.AskLoginContainer}>
           <Text style={styles.txt}>
             Don't have an account?{' '}
@@ -107,7 +116,9 @@ const LoginScreen = ({navigation}) => {
           </Text>
         </View>
       </View>
+      )}
     </View>
+    </ScrollView>
   );
 };
 
