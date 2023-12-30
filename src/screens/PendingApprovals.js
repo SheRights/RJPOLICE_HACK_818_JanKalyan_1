@@ -14,7 +14,6 @@ import CarouselComponent from '../components/CarouselComponent';
 import * as colors from '../components/color';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
-
 const topRatedPoliceStations = [
   {
     id: 1,
@@ -36,31 +35,32 @@ const topRatedPoliceStations = [
   },
 ];
 
-
-
-const PendingApprovals = ({navigation}) =>{
+const PendingApprovals = ({navigation}) => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.sectionContainer}>
-        <Text style={styles.sectionTitle}>Pending Police Station Approvals</Text>
+        <Text style={styles.sectionTitle}>
+          Pending Police Station Approvals
+        </Text>
         {topRatedPoliceStations.map(station => (
           <View key={station.id} style={styles.policeStationCard}>
-            <View style={styles.policeTextContainer}>
+            <View>
               <Text style={styles.cardTitle}>{station.name}</Text>
               <Text style={styles.cardRating}>{`${station.email}`}</Text>
               <Text style={styles.cardRating}>{station.district}</Text>
-              
-              <TouchableOpacity >
-                <Image source={require('../Assets/Select.png')}/>
+            </View>
+
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity style={{marginRight: 10}}>
+                <Image source={require('../Assets/Select.png')} />
               </TouchableOpacity>
               <TouchableOpacity>
-                <Image source={require('../Assets/Cancel.png')}/>
+                <Image source={require('../Assets/Cancel.png')} />
               </TouchableOpacity>
-
             </View>
           </View>
         ))}
-      </View> 
+      </View>
     </ScrollView>
   );
 };
@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
   policeStationCard: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 30,
   },
   policeTextContainer: {
@@ -128,8 +129,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
   },
-  
 });
-
 
 export default PendingApprovals;

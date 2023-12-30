@@ -22,12 +22,7 @@ const lowerConatinerList = [
   },
 ];
 
-
-
-const ProfileScreen = () => {
-
-
-
+const ProfileScreen = ({navigation}) => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
   function onAuthStateChanged(user) {
@@ -57,22 +52,26 @@ const ProfileScreen = () => {
           {lowerConatinerList.map((item, index) => {
             return (
               <View>
-                <TouchableOpacity style={styles.lowerConatinerItem} key={item.id} onPress={() => {
-              auth()
-                .signOut()
-                .then(() => {
-                  navigation.replace('Login');
-                });
-            }}>
+                <TouchableOpacity
+                  style={styles.lowerConatinerItem}
+                  key={item.id}
+                  onPress={() => {
+                    auth()
+                      .signOut()
+                      .then(() => {
+                        navigation.replace('Login');
+                      });
+                  }}>
                   <FontAwesome5Icon name={item.icon} size={20} color="black" />
                   <Text style={styles.lowerConatinerListText}>{item.name}</Text>
                 </TouchableOpacity>
-                <View key={index+1}
+                <View
+                  key={index + 1}
                   style={{
                     borderBottomColor: 'black',
                     borderBottomWidth: 0.5,
                     marginTop: 20,
-                    marginBottom: 40
+                    marginBottom: 40,
                   }}></View>
               </View>
             );

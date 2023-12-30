@@ -13,6 +13,8 @@ import HomeScreen from './src/screens/HomeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import StationDetails from './src/screens/StationDetails';
 import FeedBackScreen from './src/screens/FeedBackScreen';
+import AdminLanding from './src/screens/AdminLanding';
+import PendingApprovals from './src/screens/PendingApprovals';
 
 import * as colors from './src/components/color';
 
@@ -107,7 +109,7 @@ const TabNavi = ({}) => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Askwho">
+      <Stack.Navigator initialRouteName="AdminLanding">
       <Stack.Screen
           options={{headerShown: false}}
           name="Splash"
@@ -149,6 +151,16 @@ const App = () => {
           options={{headerShown: true}}
           name="Feedback"
           component={FeedBackScreen}
+        />
+        <Stack.Screen
+          options={{headerShown: true}}
+          name="AdminLanding"
+          component={AdminLanding}
+        />
+        <Stack.Screen
+          options={{headerShown: true}}
+          name="PendingApprovals"
+          component={PendingApprovals}
         />
       </Stack.Navigator>
     </NavigationContainer>
