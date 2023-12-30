@@ -11,14 +11,17 @@ const lowerConatinerList = [
   {
     name: 'Edit Profile',
     icon: 'pencil-alt',
+    callfun: 'editProfile',
   },
   {
     name: 'Feedback History',
     icon: 'file',
+    callfun: 'feedbackHistory',
   },
   {
     name: 'Logout',
     icon: 'arrow-left',
+    callfun: 'logout',
   },
 ];
 
@@ -38,8 +41,16 @@ const ProfileScreen = ({navigation}) => {
   if (initializing) return null;
 
   if (!user) {
-    return navigation.replace('Login');
+    return navigation.replace('Askwho');
   }
+
+  const logout = () => {
+    auth()
+      .signOut()
+      .then(() => {
+        navigation.replace('Askwho');
+      });
+  };
   return (
     <View style={styles.mainConatiner}>
       <View style={styles.upperConatiner}>
@@ -51,22 +62,18 @@ const ProfileScreen = ({navigation}) => {
         <View style={styles.lowerConatinerList}>
           {lowerConatinerList.map((item, index) => {
             return (
-              <View>
+              <View key={item.id}>
                 <TouchableOpacity
                   style={styles.lowerConatinerItem}
-                  key={item.id}
-                  onPress={() => {
-                    auth()
-                      .signOut()
-                      .then(() => {
-                        navigation.replace('Login');
-                      });
-                  }}>
+                  onPress={() => {auth()
+                    .signOut()
+                    .then(() => {
+                      navigation.replace('Askwho');
+                    });}}>
                   <FontAwesome5Icon name={item.icon} size={20} color="black" />
                   <Text style={styles.lowerConatinerListText}>{item.name}</Text>
                 </TouchableOpacity>
                 <View
-                  key={index + 1}
                   style={{
                     borderBottomColor: 'black',
                     borderBottomWidth: 0.5,

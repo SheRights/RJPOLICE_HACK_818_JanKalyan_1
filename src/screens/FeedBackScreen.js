@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
-import {ScrollView, View, Text, StyleSheet, Animated} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {ScrollView, View, Text, StyleSheet, Animated, LogBox} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import {Root, Popup} from '@kyupss/native-popup';
 import FeedbackComponent from '../components/FeedbackComponent';
 import * as colors from '../components/color';
-import { Image } from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
 
 const FeedBackScreen = () => {
   const [feedback, setFeedback] = useState('');
@@ -21,13 +20,17 @@ const FeedBackScreen = () => {
   const handleSubmit = () => {
     Popup.show({
       type: 'Success',
-      title: 'Upload complete',
+      title: 'Feedback Added',
       button: false,
       textBody: 'Thank you for your feedback. Your insights light up our path!',
-      buttonText: 'Ok',
+      buttonText: 'Close',
       callback: () => Popup.hide(),
     });
   };
+
+  useEffect(() => {
+    LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
+}, [])
 
   return (
     <Root>

@@ -19,13 +19,13 @@ const cardcontent = [
   },
   {
     name: 'User',
-    image: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
+    image: 'https://i.ibb.co/1m2mxK6/5187875.png',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   },
   {
     name: 'Admin',
-    image: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
+    image: 'https://i.ibb.co/6PRHKQW/5187875.webp',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   },

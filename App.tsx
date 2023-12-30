@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View,TouchableOpacity, ToastAndroid } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ToastAndroid,
+} from 'react-native';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -21,7 +27,10 @@ import * as colors from './src/components/color';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const CustomTabBarButton = ({ children, onPress }: {
+const CustomTabBarButton = ({
+  children,
+  onPress,
+}: {
   children: any;
   onPress: any;
 }) => (
@@ -39,13 +48,12 @@ const CustomTabBarButton = ({ children, onPress }: {
         height: 58,
         borderRadius: 35,
         backgroundColor: colors.secondary,
-        elevation: 5
+        elevation: 5,
       }}>
       {children}
     </View>
   </TouchableOpacity>
 );
-
 
 const TabNavi = ({}) => {
   return (
@@ -92,7 +100,7 @@ const TabNavi = ({}) => {
           ),
         }}
       />
-      
+
       <Tab.Screen
         options={{
           headerShown: false,
@@ -105,12 +113,132 @@ const TabNavi = ({}) => {
       />
     </Tab.Navigator>
   );
-}
+};
+
+const TabNaviAdmin = ({}) => {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarHideOnKeyboard: true,
+        tabBarActiveTintColor: '#000',
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          position: 'absolute',
+          bottom: 25,
+          left: 20,
+          right: 20,
+          elevation: 8,
+          backgroundColor: colors.primary,
+          borderRadius: 15,
+          height: 60,
+        },
+      }}>
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color}) => {
+            return <FontAwesome5 name="home" size={22} color={color} />;
+          },
+        }}
+        name="AdminLanding"
+        component={AdminLanding}
+      />
+      <Tab.Screen
+        name="PendingApprovals"
+        component={PendingApprovals}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({focused}) => (
+            <FontAwesome5
+              name="users"
+              size={22}
+              color={focused ? '#000' : 'grey'}
+            />
+          ),
+          tabBarButton: props => (
+            <CustomTabBarButton onPress={() => {}} {...props} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color}) => {
+            return <FontAwesome5 name="user" size={22} color={color} />;
+          },
+        }}
+        name="Profile"
+        component={ProfileScreen}
+      />
+    </Tab.Navigator>
+  );
+};
+
+const TabNaviPolice = ({}) => {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarHideOnKeyboard: true,
+        tabBarActiveTintColor: '#000',
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          position: 'absolute',
+          bottom: 25,
+          left: 20,
+          right: 20,
+          elevation: 8,
+          backgroundColor: colors.primary,
+          borderRadius: 15,
+          height: 60,
+        },
+      }}>
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color}) => {
+            return <FontAwesome5 name="home" size={22} color={color} />;
+          },
+        }}
+        name="HomeScreen"
+        component={HomeScreen}
+      />
+      <Tab.Screen
+        name="Feedback"
+        component={FeedBackScreen}
+        options={{
+          headerShown: true,
+          tabBarIcon: ({focused}) => (
+            <FontAwesome5
+              name="file"
+              size={22}
+              color={focused ? '#000' : 'grey'}
+            />
+          ),
+          tabBarButton: props => (
+            <CustomTabBarButton onPress={() => {}} {...props} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color}) => {
+            return <FontAwesome5 name="user" size={22} color={color} />;
+          },
+        }}
+        name="Profile"
+        component={ProfileScreen}
+      />
+    </Tab.Navigator>
+  );
+};
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="AdminLanding">
-      <Stack.Screen
+      <Stack.Navigator initialRouteName="Splash">
+        <Stack.Screen
           options={{headerShown: false}}
           name="Splash"
           component={SplashScreen}
@@ -135,13 +263,23 @@ const App = () => {
           name="Bottomtab"
           component={TabNavi}
         />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="BottomtabAdmin"
+          component={TabNaviAdmin}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="BottomtabPolice"
+          component={TabNaviPolice}
+        />
 
         <Stack.Screen
           options={{headerShown: false}}
           name="HomeScreen"
           component={HomeScreen}
         />
-        
+
         <Stack.Screen
           options={{headerShown: false}}
           name="StationDetails"
@@ -153,12 +291,12 @@ const App = () => {
           component={FeedBackScreen}
         />
         <Stack.Screen
-          options={{headerShown: true}}
+          options={{headerShown: false}}
           name="AdminLanding"
           component={AdminLanding}
         />
         <Stack.Screen
-          options={{headerShown: true}}
+          options={{headerShown: false}}
           name="PendingApprovals"
           component={PendingApprovals}
         />

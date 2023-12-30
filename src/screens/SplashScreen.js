@@ -2,6 +2,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Lottie from 'lottie-react-native';
 import auth from '@react-native-firebase/auth';
+import * as colors from '../components/color';
 
 const SplashScreen = ({navigation}) => {
   const [initialising, setInitialising] = useState(true);
@@ -24,7 +25,7 @@ const SplashScreen = ({navigation}) => {
   if (!user) {
     setTimeout(() => {
       navigation.replace('Askwho');
-    }, 3000);
+    }, 4000);
   } else {
     navigation.replace('Bottomtab');
   }
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 0,
     padding: 0,
-    backgroundColor: '#fff',
+    backgroundColor: colors.secondary,
     justifyContent: 'center',
   },
   TextContainer: {

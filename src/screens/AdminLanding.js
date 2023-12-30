@@ -53,11 +53,6 @@ const AdminLanding = ({navigation}) => {
             </View>
           </TouchableOpacity>
         ))}
-            <TouchableOpacity onPress={() => {navigation.navigate('PendingApprovals')}}>
-            <View>
-              <Text style={styles.sectionTitle}>Pending Approvals (Click me)</Text>
-            </View>
-          </TouchableOpacity>
       </View> 
     </ScrollView>
   );

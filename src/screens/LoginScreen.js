@@ -10,11 +10,10 @@ import {
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import * as colors from '../components/color';
-import { ScrollView } from 'react-native';
+import {ScrollView} from 'react-native';
 
 const LoginScreen = ({route, navigation}) => {
-
-  const { who } = route.params;
+  const {who} = route.params;
   console.log(who);
 
   const [email, setEmail] = useState('');
@@ -36,7 +35,15 @@ const LoginScreen = ({route, navigation}) => {
             ToastAndroid.SHORT,
             ToastAndroid.CENTER,
           );
-          navigation.replace('Bottomtab', {email: email});
+          {
+            who === 'Admin'
+              ? navigation.navigate('BottomtabAdmin')
+              : who === 'Police'
+              ? navigation.navigate('BottomtabPolice')
+              : who === 'User'
+              ? navigation.navigate('Bottomtab')
+              : console.error('Invalid user type:', who);
+          }
         })
         .catch(error => {
           if (error.code === 'auth/invalid-email') {
@@ -64,60 +71,59 @@ const LoginScreen = ({route, navigation}) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-      <View style={styles.UpperContainer}>
-        <View style={styles.LabelConatiner}>
-        </View>
-      </View>
-
-      <View style={styles.MiddleContainer}>
-        <View style={styles.RegTitleContainer}>
-          <Text style={styles.RegTitleText}>LOGIN</Text>
-        </View>
-        <View style={styles.InputFieldsConatiner}>
-          <TextInput
-            style={styles.TextInputArea}
-            value={email}
-            onChangeText={text => setEmail(text)}
-            placeholder="Email"
-            backgroundColor={colors.secondary}
-            placeholderTextColor="#3d5c5c"
-          />
-          <TextInput
-            style={styles.TextInputArea}
-            value={pass}
-            onChangeText={text => setPass(text)}
-            placeholder="Password"
-            secureTextEntry={true}
-            backgroundColor={colors.secondary}
-            placeholderTextColor="#3d5c5c"
-          />
+        <View style={styles.UpperContainer}>
+          <View style={styles.LabelConatiner}></View>
         </View>
 
-        <View style={styles.RegisterButtonConatiner}>
-          <Button
-            style={styles.Regbtn}
-            onPress={() => loginfun()}
-            title="Login"
-            color="#000"
-          />
-        </View>
-      </View>
+        <View style={styles.MiddleContainer}>
+          <View style={styles.RegTitleContainer}>
+            <Text style={styles.RegTitleText}>LOGIN</Text>
+          </View>
+          <View style={styles.InputFieldsConatiner}>
+            <TextInput
+              style={styles.TextInputArea}
+              value={email}
+              onChangeText={text => setEmail(text)}
+              placeholder="Email"
+              backgroundColor={colors.secondary}
+              placeholderTextColor="#3d5c5c"
+            />
+            <TextInput
+              style={styles.TextInputArea}
+              value={pass}
+              onChangeText={text => setPass(text)}
+              placeholder="Password"
+              secureTextEntry={true}
+              backgroundColor={colors.secondary}
+              placeholderTextColor="#3d5c5c"
+            />
+          </View>
 
-      {who === 'Admin' ? (
-        <View style={styles.LowerContainerContent}></View>
-      ):(
-        <View style={styles.LowerContainerContent}>
-        <View style={styles.AskLoginContainer}>
-          <Text style={styles.txt}>
-            Don't have an account?{' '}
-            <TouchableOpacity onPress={() => navigation.replace('SignUp')}>
-              <Text style={styles.login}> Create One!</Text>
-            </TouchableOpacity>
-          </Text>
+          <View style={styles.RegisterButtonConatiner}>
+            <Button
+              style={styles.Regbtn}
+              onPress={() => loginfun()}
+              title="Login"
+              color="#000"
+            />
+          </View>
         </View>
+
+        {who === 'Admin' ? (
+          <View style={styles.LowerContainerContent}></View>
+        ) : (
+          <View style={styles.LowerContainerContent}>
+            <View style={styles.AskLoginContainer}>
+              <Text style={styles.txt}>
+                Don't have an account?{' '}
+                <TouchableOpacity onPress={() => navigation.replace('SignUp')}>
+                  <Text style={styles.login}> Create One!</Text>
+                </TouchableOpacity>
+              </Text>
+            </View>
+          </View>
+        )}
       </View>
-      )}
-    </View>
     </ScrollView>
   );
 };
@@ -164,8 +170,7 @@ const styles = StyleSheet.create({
     borderRadius: 21,
     padding: 10,
   },
-  Regbtn: {
-  },
+  Regbtn: {},
   RegTitleContainer: {},
   RegTitleText: {
     textAlign: 'center',
