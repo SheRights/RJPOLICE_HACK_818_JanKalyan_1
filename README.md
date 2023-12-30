@@ -1,7 +1,7 @@
 # Aawaz - Voice to Every Indiviual 
 
 
-<img src="Feedback Illustration.jpg" alt="Aawaz - Voice to Every Indiviual " align="middle" width="90%" height=500>
+<img src="fdi.jpg" alt="Aawaz - Voice to Every Indiviual " align="middle" width="90%" height=500>
 
 
 ## Table of Contents
@@ -81,7 +81,7 @@ To run this app, follow the steps below:
 <li>Clone the repository, open cmd in the desired folder and type:</li>
 
 ```
-git clone https://github.com/SheRights/SheRights-Application.git
+git clone https://github.com/SheRights/RJPOLICE_HACK_818_JanKalyan_1.git
 ```
 
 <li>Navigate to the project's root directory.</li>
@@ -94,7 +94,7 @@ npm install
 </ol>
 
 ## Configuration
-SheRights uses Firebase for authentication and database. To use Firebase in the app, you will need to create a new Firebase project and add the configuration details to the project. Here's how:
+Aawaz uses Firebase for authentication and database. To use Firebase in the app, you will need to create a new Firebase project and add the configuration details to the project. Here's how:
 <ol>
 <li>Create a new Firebase project on the Firebase Console.</li>
 <li>Navigate to the project's settings and click on the "Add Firebase to your app" button.</li>
@@ -116,9 +116,8 @@ npx react-native start
 ```
 npx react-native run-android
 ```
-
-</ol>
+  
 This will start the React server and open the React Developer Tools in your prompt. From here, you can choose to run the app on a physical device, emulator and start the test runner and run all the tests for the application.
 
 ## Conclusion
-That's it! You now have a fully functional SheRights application running on your device or emulator. Feel free to explore the application and test out its features. If you have any feedback or suggestions for the application, please feel free to contact us. We hope that SheRights can make a positive impact on the lives of women worldwide.
+That's it! You now have a fully functional Aawaz application running on your device or emulator. Feel free to explore the application and test out its features. If you have any feedback or suggestions for the application, please feel free to reach out to us. We hope that Aawaz can make a positive impact and bring transaprency between Common People and Police Department
