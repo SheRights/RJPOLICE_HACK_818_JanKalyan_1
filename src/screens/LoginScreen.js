@@ -73,7 +73,7 @@ const LoginScreen = ({navigation}) => {
             value={email}
             onChangeText={text => setEmail(text)}
             placeholder="Email"
-            backgroundColor="#EEE6FF"
+            backgroundColor={colors.secondary}
             placeholderTextColor="#3d5c5c"
           />
           <TextInput
@@ -82,7 +82,7 @@ const LoginScreen = ({navigation}) => {
             onChangeText={text => setPass(text)}
             placeholder="Password"
             secureTextEntry={true}
-            backgroundColor="#EEE6FF"
+            backgroundColor={colors.secondary}
             placeholderTextColor="#3d5c5c"
           />
         </View>
@@ -92,7 +92,7 @@ const LoginScreen = ({navigation}) => {
             style={styles.Regbtn}
             onPress={() => loginfun()}
             title="Login"
-            color="#B1ABF1"
+            color="#000"
           />
         </View>
       </View>
@@ -102,7 +102,7 @@ const LoginScreen = ({navigation}) => {
           <Text style={styles.txt}>
             Don't have an account?{' '}
             <TouchableOpacity onPress={() => navigation.replace('SignUp')}>
-              <Text style={styles.login}> Sign Up</Text>
+              <Text style={styles.login}> Create One!</Text>
             </TouchableOpacity>
           </Text>
         </View>
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: colors.mainbg,
+    backgroundColor: colors.secondary,
   },
   UpperContainer: {
     width: '100%',
@@ -147,14 +147,13 @@ const styles = StyleSheet.create({
   LabelConatiner: {},
   MiddleContainer: {
     // flex:0.4,
-    backgroundColor: colors.authcontentholder,
+    backgroundColor: colors.primary,
     marginTop: '50%',
     marginHorizontal: '10%',
     borderRadius: 21,
     padding: 10,
   },
   Regbtn: {
-    borderRadius: 21,
   },
   RegTitleContainer: {},
   RegTitleText: {
@@ -177,7 +176,6 @@ const styles = StyleSheet.create({
     marginTop: 60,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 20,
   },
   custombtn: {
     alignItems: 'center',
@@ -196,6 +194,6 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   login: {
-    color: 'blue',
+    color: '#000',
   },
 });

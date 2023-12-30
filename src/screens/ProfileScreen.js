@@ -34,7 +34,7 @@ const ProfileScreen = () => {
           {lowerConatinerList.map((item, index) => {
             return (
               <View>
-                <TouchableOpacity style={styles.lowerConatinerItem} key={index}>
+                <TouchableOpacity style={styles.lowerConatinerItem} key={item.id}>
                   <FontAwesome5Icon name={item.icon} size={20} color="black" />
                   <Text style={styles.lowerConatinerListText}>{item.name}</Text>
                 </TouchableOpacity>

@@ -92,7 +92,7 @@ const SignUpScreen = ({navigation}) => {
     }
   };
   return (
-    <View style={styles.container}>
+    <View style={styles.f}>
       <ScrollView>
       <View style={styles.UpperContainer}>
         <View style={styles.LabelConatiner}>
@@ -109,7 +109,7 @@ const SignUpScreen = ({navigation}) => {
             value={name}
             onChangeText={text => setName(text)}
             placeholder="Full Name"
-            backgroundColor={colors.uppercircle}
+            backgroundColor={colors.secondary}
             placeholderTextColor="#3d5c5c"
           />
           <TextInput
@@ -118,7 +118,7 @@ const SignUpScreen = ({navigation}) => {
             onChangeText={text => setPhone(text)}
             placeholder="Phone"
             keyboardType="numeric"
-            backgroundColor={colors.uppercircle}
+            backgroundColor={colors.secondary}
             placeholderTextColor="#3d5c5c"
           />
           <TextInput
@@ -127,7 +127,7 @@ const SignUpScreen = ({navigation}) => {
             onChangeText={text => setAge(text)}
             placeholder="Age"
             keyboardType="numeric"
-            backgroundColor={colors.uppercircle}
+            backgroundColor={colors.secondary}
             placeholderTextColor="#3d5c5c"
           />
           <TextInput
@@ -135,7 +135,7 @@ const SignUpScreen = ({navigation}) => {
             value={email}
             onChangeText={text => setEmail(text)}
             placeholder="Email ID"
-            backgroundColor={colors.uppercircle}
+            backgroundColor={colors.secondary}
             placeholderTextColor="#3d5c5c"
           />
           <View style={styles.genderContainer}>
@@ -185,7 +185,7 @@ const SignUpScreen = ({navigation}) => {
             value={IdProof}
             onChangeText={text => setIdProof(text)}
             placeholder="Aadhaar Card Number"
-            backgroundColor={colors.uppercircle}
+            backgroundColor={colors.secondary}
             placeholderTextColor="#3d5c5c"
           />
           <TextInput
@@ -193,7 +193,7 @@ const SignUpScreen = ({navigation}) => {
             value={pass}
             onChangeText={text => setPass(text)}
             placeholder="Enter Password"
-            backgroundColor={colors.uppercircle}
+            backgroundColor={colors.secondary}
             placeholderTextColor="#3d5c5c"
           />
         </View>
@@ -203,7 +203,7 @@ const SignUpScreen = ({navigation}) => {
           <Button style={styles.Regbtn}
           onPress={() => signupfun()}
           title="REGISTER"
-          color="#0038FF"
+          color="#000"
           
         />
         </View>
@@ -215,7 +215,7 @@ const SignUpScreen = ({navigation}) => {
             Already have an account?{' '}</Text>
           
           <TouchableOpacity style={styles.login} onPress={() => navigation.navigate('Login')}>
-     <Text style={{color:'blue'}}>  Login    </Text>
+     <Text style={{color:'#000'}}>  Login    </Text>
             </TouchableOpacity>
         </View>
       </View>
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: colors.mainbg,
+    backgroundColor: colors.secondary,
   },
   UpperContainer: {
     width: '100%',
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
   },
   LabelConatiner: {},
   MiddleContainer: {
-    backgroundColor: colors.authcontentholder,
+    backgroundColor: colors.primary,
     marginVertical: '20%',
     marginHorizontal: '10%',
     borderRadius: 21,
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   login: {
-    color: 'blue',
+    color: '#000',
 
   },
   gbtn: {

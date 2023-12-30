@@ -1,4 +1,4 @@
-export const uppercircle = '#E5E9FE';
+export const uppercircle = '#F4EAE0';
 export const lowercircle = '#fff';
 export const authcontentholder = '#D9D9D9';
 export const mainbg = '#fff';
