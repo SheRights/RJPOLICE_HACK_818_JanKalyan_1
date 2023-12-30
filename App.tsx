@@ -12,6 +12,7 @@ import SignupScreen from './src/screens/SignupScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import StationDetails from './src/screens/StationDetails';
+import FeedBackScreen from './src/screens/FeedBackScreen';
 
 import * as colors from './src/components/color';
 
@@ -106,7 +107,7 @@ const TabNavi = ({}) => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash">
+      <Stack.Navigator initialRouteName="Feedback">
       <Stack.Screen
           options={{headerShown: false}}
           name="Splash"
@@ -143,6 +144,11 @@ const App = () => {
           options={{headerShown: false}}
           name="StationDetails"
           component={StationDetails}
+        />
+        <Stack.Screen
+          options={{headerShown: true}}
+          name="Feedback"
+          component={FeedBackScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
