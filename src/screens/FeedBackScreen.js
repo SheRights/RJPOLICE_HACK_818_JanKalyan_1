@@ -5,6 +5,7 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import {Root, Popup} from '@kyupss/native-popup';
 import FeedbackComponent from '../components/FeedbackComponent';
 import * as colors from '../components/color';
+import { Image } from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
 
 const FeedBackScreen = () => {
   const [feedback, setFeedback] = useState('');

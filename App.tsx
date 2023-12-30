@@ -107,7 +107,7 @@ const TabNavi = ({}) => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Feedback">
+      <Stack.Navigator initialRouteName="Askwho">
       <Stack.Screen
           options={{headerShown: false}}
           name="Splash"

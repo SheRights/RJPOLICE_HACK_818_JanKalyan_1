@@ -1,10 +1,19 @@
-import {StyleSheet, Text, View, Image, ScrollView, Touchable, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  Touchable,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
+import * as colors from '../components/color';
 
 const cardcontent = [
   {
     name: 'Police',
-    image: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
+    image: 'https://cdn3d.iconscout.com/3d/premium/thumb/policeman-6368703-5250850.png',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   },
@@ -24,23 +33,26 @@ const cardcontent = [
 
 const AskWho = ({navigation}) => {
   return (
-      <View style={styles.container}>
-        <View style={styles.cardholder}>
-          {cardcontent.map((item, index) => {
-            return (
-              <TouchableOpacity key={index} style={styles.card} onPress={()=>{navigation.navigate('Login')}}>
-                <View style={styles.cardAlign}>
-                  <Image source={{uri: item.image}} style={styles.cardimage} />
-                  <View>
-                  <Text style={styles.cardtitle}>{item.name}</Text>
-                    <Text style={styles.carddescription}>{item.description}</Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
+    <View style={styles.container}>
+      <Text style={styles.title}>Who are you?</Text>
+      <View style={styles.cardholder}>
+        {cardcontent.map((item, index) => {
+          return (
+            <TouchableOpacity
+              key={index}
+              style={styles.card}
+              onPress={() => {
+                navigation.navigate('Login');
+              }}>
+              <View style={styles.cardAlign}>
+                <Image source={{uri: item.image}} style={styles.cardimage} />
+                <Text style={styles.cardtitle}>{item.name}</Text>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
       </View>
+    </View>
   );
 };
 
@@ -49,45 +61,45 @@ export default AskWho;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: '#f0f0f0', 
+    backgroundColor: colors.secondary,
+    alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
+  },
+  title:{
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: '#000',
+    marginBottom: 20
   },
   cardholder: {
-    flexDirection: 'column',
+    padding: 20,
+    overflow: 'hidden',
+    width: '100%'
   },
   card: {
-    marginBottom: 16,
-    padding: 16,
-    backgroundColor: '#ffffff', 
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    padding: 10,
     overflow: 'hidden',
+    width: "100%",
+    marginBottom: 30,
+    backgroundColor: colors.primary,
+    borderRadius: 20,
+    elevation: 10
   },
   cardAlign: {
+    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
   },
   cardimage: {
-    width: 80,
-    height: 80, 
-    borderRadius: 8,
-    marginRight: 16,
+    width: 60,
+    height: 60,
+    borderRadius: 50,
   },
   cardtitle: {
-    fontSize: 18,
+    marginLeft: 20,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  carddescription: {
-    fontSize: 16,
-    color: '#555',
+    color: '#000',
   },
 });
