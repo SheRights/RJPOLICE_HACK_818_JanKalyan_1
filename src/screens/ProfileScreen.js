@@ -1,8 +1,9 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import {TouchableOpacity, Dimensions} from 'react-native';
 import * as colors from '../components/color';
+import auth from '@react-native-firebase/auth';
 
 var {width, height} = Dimensions.get('window');
 
@@ -21,7 +22,29 @@ const lowerConatinerList = [
   },
 ];
 
+
+
 const ProfileScreen = () => {
+
+
+
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
+  if (initializing) return null;
+
+  if (!user) {
+    return navigation.replace('Login');
+  }
   return (
     <View style={styles.mainConatiner}>
       <View style={styles.upperConatiner}>
@@ -34,7 +57,13 @@ const ProfileScreen = () => {
           {lowerConatinerList.map((item, index) => {
             return (
               <View>
-                <TouchableOpacity style={styles.lowerConatinerItem} key={item.id}>
+                <TouchableOpacity style={styles.lowerConatinerItem} key={item.id} onPress={() => {
+              auth()
+                .signOut()
+                .then(() => {
+                  navigation.replace('Login');
+                });
+            }}>
                   <FontAwesome5Icon name={item.icon} size={20} color="black" />
                   <Text style={styles.lowerConatinerListText}>{item.name}</Text>
                 </TouchableOpacity>
