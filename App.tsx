@@ -21,6 +21,8 @@ import StationDetails from './src/screens/StationDetails';
 import FeedBackScreen from './src/screens/FeedBackScreen';
 import AdminLanding from './src/screens/AdminLanding';
 import PendingApprovals from './src/screens/PendingApprovals';
+import FeedbackType from './src/screens/FeebackType';
+import ChatScreen from './src/screens/ChatScreen';
 
 import * as colors from './src/components/color';
 
@@ -84,10 +86,10 @@ const TabNavi = ({}) => {
         component={HomeScreen}
       />
       <Tab.Screen
-        name="Feedback"
-        component={FeedBackScreen}
+        name="Feedbacktype"
+        component={FeedbackType}
         options={{
-          headerShown: true,
+          headerShown: false,
           tabBarIcon: ({focused}) => (
             <FontAwesome5
               name="plus"
@@ -299,6 +301,16 @@ const App = () => {
           options={{headerShown: false}}
           name="PendingApprovals"
           component={PendingApprovals}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="Feedbacktype"
+          component={FeedbackType}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="Chatscreen"
+          component={ChatScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

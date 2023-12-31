@@ -1,11 +1,13 @@
 // CarouselComponent.js
 
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
-const sliderWidth = 500; 
-const itemWidth = 500; 
+const { width, height } = Dimensions.get('window');
+
+const sliderWidth = width; 
+const itemWidth = width; 
 
 const CarouselComponent = ({ data }) => {
   const _renderItem = ({ item, index }) => {
@@ -38,7 +40,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: '75%',
+    width: width-35,
     height: '100%', 
     borderRadius: 20,
   },

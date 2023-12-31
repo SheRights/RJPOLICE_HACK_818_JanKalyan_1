@@ -76,10 +76,12 @@ const recentFeedbacks = [
 const HomeScreen = ({navigation}) => {
   return (
     <ScrollView style={styles.container}>
+      <View style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
       <SearchBar
         placeholder="Search Police Stations"
         onSearch={text => console.log(text)}
       />
+      </View>
 
       <View style={styles.carouselContainer}>
         <CarouselComponent data={carouselData} />
