@@ -27,7 +27,7 @@ const SplashScreen = ({navigation}) => {
       navigation.replace('Askwho');
     }, 4000);
   } else {
-    navigation.replace('Bottomtab');
+    navigation.replace('BottomtabPolice');
   }
   return (
     <View style={styles.container}>

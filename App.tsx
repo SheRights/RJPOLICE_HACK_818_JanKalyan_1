@@ -23,6 +23,10 @@ import AdminLanding from './src/screens/AdminLanding';
 import PendingApprovals from './src/screens/PendingApprovals';
 import FeedbackType from './src/screens/FeebackType';
 import ChatScreen from './src/screens/ChatScreen';
+import AddNewCase from './src/screens/AddNewCase';
+import AllCases from './src/screens/AllCases';
+import PoliceHome from './src/screens/PoliceHome';
+import FeedbackReport from './src/screens/FeedbackReport';
 
 import * as colors from './src/components/color';
 
@@ -202,14 +206,14 @@ const TabNaviPolice = ({}) => {
             return <FontAwesome5 name="home" size={22} color={color} />;
           },
         }}
-        name="HomeScreen"
-        component={HomeScreen}
+        name="PoliceHome"
+        component={PoliceHome}
       />
       <Tab.Screen
-        name="Feedback"
-        component={FeedBackScreen}
+        name="AddNewCase"
+        component={AddNewCase}
         options={{
-          headerShown: true,
+          headerShown: false,
           tabBarIcon: ({focused}) => (
             <FontAwesome5
               name="file"
@@ -311,6 +315,21 @@ const App = () => {
           options={{headerShown: false}}
           name="Chatscreen"
           component={ChatScreen}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="AddNewCase"
+          component={AddNewCase}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="AllCases"
+          component={AllCases}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="FeedbackReport"
+          component={FeedbackReport}
         />
       </Stack.Navigator>
     </NavigationContainer>
