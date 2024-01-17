@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   TextInput,
@@ -7,15 +7,16 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import SearchBar from '../components/SearchBar';
 import CarouselComponent from '../components/CarouselComponent';
-
-const {width, height} = Dimensions.get('window');
-
+import axios from 'axios';
 import * as colors from '../components/color';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+
+const { width, height } = Dimensions.get('window');
 
 const carouselData = [
   {
@@ -28,60 +29,51 @@ const carouselData = [
     image: 'https://i.ibb.co/2YhGBzB/center.jpg',
   },
 ];
-const topRatedPoliceStations = [
-  {
-    id: 1,
-    name: 'Police Station 1',
-    rating: 4.8,
-    image: 'https://i.ibb.co/QvG4yvc/ps1.jpg',
-  },
-  {
-    id: 2,
-    name: 'Police Station 2',
-    rating: 3.0,
-    image: 'https://i.ibb.co/3M1pYfZ/ps2.jpg',
-  },
-  {
-    id: 3,
-    name: 'Police Station 3',
-    rating: 2.5,
-    image: 'https://i.ibb.co/ZmDv5fD/ps3.jpg',
-  },
-];
 
-const recentFeedbacks = [
-  {
-    id: 1,
-    userName: 'Username 1',
-    image:
-      'https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    feedback: 'Great experience with the police station!',
-  },
-  {
-    id: 2,
-    userName: 'Username 2',
-    image:
-      'https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    feedback: 'Quick response and helpful staff.',
-  },
-  {
-    id: 3,
-    userName: 'Username 3',
-    image:
-      'https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    feedback: 'Could improve the waiting time.',
-  },
-];
+const HomeScreen = ({ navigation }) => {
+  const [topRatedStations, setTopRatedStations] = useState([]);
+  const [recentFeedbacks, setRecentFeedbacks] = useState([]);
+  const [dataFetched, setDataFetched] = useState(false);
 
-const HomeScreen = ({navigation}) => {
+  const fetchData = useCallback(() => {
+    try {
+      axios
+        .get('https://aawaz-backend-pthakare72003.replit.app/user/listStations')
+        .then(response => {
+          const sortedStations = response.data.sort(
+            (a, b) => b.overall_rating - a.overall_rating,
+          );
+          const top3Stations = sortedStations.slice(0, 3);
+          setTopRatedStations(top3Stations);
+        })
+        .catch(error =>
+          console.error('Error fetching top-rated stations:', error),
+        );
+
+      axios
+        .get('https://aawaz-backend-pthakare72003.replit.app/user/feedback?orderBy=date&order=desc')
+        .then(response => setRecentFeedbacks(response.data))
+        .catch(error =>
+          console.error('Error fetching recent feedbacks:', error),
+        );
+    } catch (error) {
+      console.error('An unexpected error occurred:', error);
+    } finally {
+      setDataFetched(true);
+    }
+  }, []);
+
+  useFocusEffect(() => {
+    if (!dataFetched) {
+      fetchData();
+    }
+  });
   return (
     <ScrollView style={styles.container}>
-      <View style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
       <SearchBar
         placeholder="Search Police Stations"
         onSearch={text => console.log(text)}
       />
-      </View>
 
       <View style={styles.carouselContainer}>
         <CarouselComponent data={carouselData} />
@@ -89,18 +81,25 @@ const HomeScreen = ({navigation}) => {
 
       <View style={styles.sectionContainer}>
         <Text style={styles.sectionTitle}>Top Rated Police Stations</Text>
-        {topRatedPoliceStations.map(station => (
+        {topRatedStations.map(station => (
           <TouchableOpacity
             key={station.id}
             style={styles.policeStationCard}
             onPress={() => {
-              navigation.navigate('StationDetails');
+              navigation.navigate('StationDetails', {stationId: station.id});
             }}>
-            <Image source={{uri: station.image}} style={styles.cardImage} />
+            <Image
+              source={{
+                uri: 'https://images.hindustantimes.com/rf/image_size_630x354/HT/p2/2019/07/18/Pictures/bikaner_f64af148-a927-11e9-bdb2-acd0277ecbef.jpg',
+              }}
+              style={styles.cardImage}
+            />
             <View style={styles.policeTextContainer}>
               <Text style={styles.cardTitle}>{station.name}</Text>
               <Text
-                style={styles.cardRating}>{`Rating: ${station.rating}`}</Text>
+                style={
+                  styles.cardRating
+                }>{`Rating: ${station.overall_rating}`}</Text>
             </View>
           </TouchableOpacity>
         ))}
@@ -113,14 +112,22 @@ const HomeScreen = ({navigation}) => {
             {recentFeedbacks.map(feedback => (
               <View key={feedback.id} style={styles.feedbackCard}>
                 <View style={styles.feedbackImageNameContainer}>
-                <Image
-                  source={{uri: feedback.image}}
-                  style={styles.feedbackImage}
-                />
-                  <Text style={styles.userName}>{feedback.userName}</Text>
+                  <Image
+                    source={{
+                      uri: 'https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper.png',
+                    }}
+                    style={styles.feedbackImage}
+                  />
+                  <Text style={styles.userName}>{feedback.user_name}</Text>
                 </View>
                 <View style={styles.ActualFeedbackContainer}>
-                  <Text style={styles.actualfeedback}>{feedback.feedback}</Text>
+                  <Text style={styles.stationName}>
+                    Station: {feedback.police_station}
+                  </Text>
+                  <Text style={styles.actualfeedback}>
+                    <Text style={styles.stationName}>Feedback: </Text>
+                    {feedback.feedback_text}
+                  </Text>
                 </View>
                 <View style={styles.IconsContainer}>
                   <FontAwesome5Icon name="thumbs-up" size={20} color="#000" />
@@ -142,22 +149,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: colors.secondary,
-  },
-  searchBarContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#ddd',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    marginBottom: 16,
-  },
-  searchIcon: {
-    marginRight: 8,
-  },
-  searchInput: {
-    flex: 1,
-    height: 40,
   },
   carouselContainer: {
     marginBottom: 16,
@@ -196,10 +187,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#000',
   },
-  cardFeedback: {
-    fontSize: 14,
-    textAlign: 'center',
-  },
   feedbacksContainer: {},
   feedbackTitle: {
     fontSize: 20,
@@ -212,10 +199,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     marginBottom: 130,
-    width: '100%'
+    width: '100%',
   },
   feedbackCard: {
-    width: width-30,
+    width: width - 30,
     backgroundColor: colors.uppercircle,
     padding: 10,
     borderRadius: 20,
@@ -235,10 +222,16 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     fontSize: 15,
     fontWeight: 'bold',
-    color: '#000'
+    color: '#000',
   },
   ActualFeedbackContainer: {
-    marginTop: 15
+    marginTop: 15,
+    marginLeft: 5,
+  },
+  stationName: {
+    fontSize: 15,
+    color: '#000',
+    fontWeight: 'bold',
   },
   actualfeedback: {
     fontSize: 15,
@@ -250,7 +243,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 30,
     justifyContent: 'space-between',
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
   },
 });
 

@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ToastAndroid,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -26,7 +26,11 @@ import ChatScreen from './src/screens/ChatScreen';
 import AddNewCase from './src/screens/AddNewCase';
 import AllCases from './src/screens/AllCases';
 import PoliceHome from './src/screens/PoliceHome';
-import FeedbackReport from './src/screens/FeedbackReport';
+import FeedbackReport from './src/screens/FeedbackReport'
+import SampleChat from './src/screens/SampleChat';
+import TestingScreen from './src/screens/TestingScreen';
+import EditProfile from './src/screens/EditProfile';
+import SmartChat from './src/screens/SmartChat';
 
 import * as colors from './src/components/color';
 
@@ -243,7 +247,7 @@ const TabNaviPolice = ({}) => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash">
+      <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen
           options={{headerShown: false}}
           name="Splash"
@@ -330,6 +334,31 @@ const App = () => {
           options={{headerShown: false}}
           name="FeedbackReport"
           component={FeedbackReport}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="SampleChat"
+          component={SampleChat}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="PoliceHome"
+          component={PoliceHome}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="TestingScreen"
+          component={TestingScreen}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="EditProfile"
+          component={EditProfile}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="SmartChat"
+          component={SmartChat}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import StarRating from 'react-native-star-rating';
 
-const FeedbackComponent = () => {
+const FeedbackComponent = ({ onRatingChange }) => {
   const [starCount, setStarCount] = useState(3.5);
 
   const onStarRatingPress = (rating) => {
     setStarCount(rating);
+    onRatingChange(Math.ceil(rating));
   };
 
   return (

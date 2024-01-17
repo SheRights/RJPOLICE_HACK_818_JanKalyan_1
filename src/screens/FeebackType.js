@@ -16,7 +16,7 @@ import {
       image: 'https://i.ibb.co/GHdChFm/5187875-2.png',
       description:
         'Provide feedbacks interactively chatting with our chatbot. No multimedia support in chatbot.',
-      navito: 'Chatscreen'
+      navito: 'SmartChat'
     },
     {
       name: 'Form Based',

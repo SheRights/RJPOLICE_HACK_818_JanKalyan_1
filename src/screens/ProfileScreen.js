@@ -55,7 +55,7 @@ const ProfileScreen = ({navigation}) => {
     <View style={styles.mainConatiner}>
       <View style={styles.upperConatiner}>
         <FontAwesome5Icon name="user" size={100} color="white" />
-        <Text style={styles.upperConatinerText}>Hello Nikita!</Text>
+        <Text style={styles.upperConatinerText}>Hello </Text>
       </View>
 
       <View style={styles.lowerConatiner}>

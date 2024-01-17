@@ -1,75 +1,53 @@
-import React, {useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  TouchableOpacity,
-  ToastAndroid,
-} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import * as colors from '../components/color';
-import {ScrollView} from 'react-native';
+import { ScrollView } from 'react-native';
 
-const LoginScreen = ({route, navigation}) => {
-  const {who} = route.params;
+const LoginScreen = ({ route, navigation }) => {
+  const { who } = route.params;
   console.log(who);
 
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const [loading, setLoading] = useState(false); // Added loading state
 
   const loginfun = async () => {
-    if (email === '' && pass === '') {
-      ToastAndroid.show(
-        'Enter the required fields',
-        ToastAndroid.SHORT,
-        ToastAndroid.CENTER,
-      );
-    } else {
-      await auth()
-        .signInWithEmailAndPassword(email, pass)
-        .then(() => {
-          ToastAndroid.show(
-            'Logged in Successfully',
-            ToastAndroid.SHORT,
-            ToastAndroid.CENTER,
-          );
-          {
-            who === 'Admin'
-              ? navigation.navigate('BottomtabAdmin')
-              : who === 'Police'
-              ? navigation.navigate('BottomtabPolice')
-              : who === 'User'
-              ? navigation.navigate('Bottomtab')
-              : console.error('Invalid user type:', who);
-          }
-        })
-        .catch(error => {
-          if (error.code === 'auth/invalid-email') {
-            // console.log('The email address is invalid!');
-            ToastAndroid.show(
-              'Invalid email address!',
-              ToastAndroid.SHORT,
-              ToastAndroid.CENTER,
-            );
-          }
-          if (error.code === 'auth/wrong-password') {
-            // console.log('The password does not matches the email id!');
-            ToastAndroid.show(
-              'Invalid password!',
-              ToastAndroid.SHORT,
-              ToastAndroid.CENTER,
-            );
-          }
+    if (email === '' || pass === '' || loading) {
+      return; // Do nothing if fields are empty or login is in progress
+    }
 
-          console.log(error);
-        });
+    try {
+      setLoading(true); // Start loading
+      await auth().signInWithEmailAndPassword(email, pass);
+      ToastAndroid.show('Logged in Successfully', ToastAndroid.SHORT, ToastAndroid.CENTER);
+
+      // Navigate to the appropriate screen based on 'who'
+      if (who === 'Admin') {
+        navigation.replace('BottomtabAdmin');
+      } else if (who === 'Police') {
+        navigation.replace('BottomtabPolice');
+      } else if (who === 'User') {
+        navigation.replace('Bottomtab');
+      } else {
+        console.error('Invalid user type:', who);
+      }
+    } catch (error) {
+      // Handle authentication errors
+      if (error.code === 'auth/invalid-email') {
+        ToastAndroid.show('Invalid email address!', ToastAndroid.SHORT, ToastAndroid.CENTER);
+      }
+      if (error.code === 'auth/wrong-password') {
+        ToastAndroid.show('Invalid password!', ToastAndroid.SHORT, ToastAndroid.CENTER);
+      }
+      console.log(error);
+    } finally {
+      setLoading(false); // Stop loading regardless of success or failure
     }
   };
 
   return (
-    <ScrollView style={{flex: 1, backgroundColor: colors.secondary}}>
+    <ScrollView style={{ flex: 1, backgroundColor: colors.secondary }}>
       <View style={styles.container}>
         <View style={styles.UpperContainer}>
           <View style={styles.LabelConatiner}></View>
@@ -83,7 +61,7 @@ const LoginScreen = ({route, navigation}) => {
             <TextInput
               style={styles.TextInputArea}
               value={email}
-              onChangeText={text => setEmail(text)}
+              onChangeText={(text) => setEmail(text)}
               placeholder="Email"
               backgroundColor={colors.secondary}
               placeholderTextColor="#3d5c5c"
@@ -91,7 +69,7 @@ const LoginScreen = ({route, navigation}) => {
             <TextInput
               style={styles.TextInputArea}
               value={pass}
-              onChangeText={text => setPass(text)}
+              onChangeText={(text) => setPass(text)}
               placeholder="Password"
               secureTextEntry={true}
               backgroundColor={colors.secondary}
@@ -102,16 +80,16 @@ const LoginScreen = ({route, navigation}) => {
           <View style={styles.RegisterButtonConatiner}>
             <Button
               style={styles.Regbtn}
-              onPress={() => loginfun()}
+              onPress={loginfun}
               title="Login"
               color="#000"
+              disabled={loading} // Disable the button while loading
             />
+            {loading && <ActivityIndicator size="small" color="#000" style={{ marginTop: 10 }} />} 
           </View>
         </View>
 
-        {who === 'Admin' ? (
-          <View style={styles.LowerContainerContent}></View>
-        ) : (
+        {who !== 'Admin' && (
           <View style={styles.LowerContainerContent}>
             <View style={styles.AskLoginContainer}>
               <Text style={styles.txt}>
@@ -140,15 +118,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
   },
-  LabelText: {
-    color: '#000',
-    alignItems: 'center',
-    fontWeight: 'bold',
-    fontSize: 15,
-    marginTop: 40,
-    margin: 10,
-    textAlign: 'center',
-  },
   container: {
     flex: 1,
     backgroundColor: colors.secondary,
@@ -163,7 +132,6 @@ const styles = StyleSheet.create({
   },
   LabelConatiner: {},
   MiddleContainer: {
-    // flex:0.4,
     backgroundColor: colors.primary,
     marginTop: '50%',
     marginHorizontal: '10%',
@@ -193,14 +161,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  custombtn: {
-    alignItems: 'center',
-    padding: 8,
-    backgroundColor: '#fff',
-    color: '#000',
-    width: '40%',
-    borderRadius: 5,
-  },
   txt: {
     textAlign: 'center',
     paddingBottom: 40,
@@ -211,5 +171,9 @@ const styles = StyleSheet.create({
   },
   login: {
     color: '#000',
+  },
+  RegisterButtonConatiner: {
+    padding: 10,
+    position: 'relative',
   },
 });
