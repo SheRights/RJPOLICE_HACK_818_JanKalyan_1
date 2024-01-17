@@ -1,59 +1,56 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
-  TextInput,
-  StyleSheet,
+  Text,
   Image,
   ScrollView,
-  Text,
   TouchableOpacity,
+  Dimensions,
+  StyleSheet,
 } from 'react-native';
-import SearchBar from '../components/SearchBar';
-import CarouselComponent from '../components/CarouselComponent';
-
+import axios from 'axios';
 import * as colors from '../components/color';
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
+const { width } = Dimensions.get('window');
 
-const topRatedPoliceStations = [
-  {
-    id: 1,
-    name: 'Bibwewadi Police Station',
-    rating: 4.8,
-    image: 'https://i.ibb.co/QvG4yvc/ps1.jpg',
-  },
-  {
-    id: 2,
-    name: 'Swargate Police Station',
-    rating: 3.0,
-    image: 'https://i.ibb.co/3M1pYfZ/ps2.jpg',
-  },
-  {
-    id: 3,
-    name: 'Karvenagar Police Station',
-    rating: 1.0,
-    image: 'https://i.ibb.co/ZmDv5fD/ps3.jpg',
-  },
-];
+const AdminLanding = ({ navigation }) => {
+  const [policeStations, setPoliceStations] = useState([]);
 
-///Alignment of images has to be changed.(Approve and Reject)
+  useEffect(() => {
+    const fetchPoliceStations = async () => {
+      try {
+        const apiUrl = 'https://aawaz-backend-pthakare72003.replit.app/user/listStations';
+        const response = await axios.get(apiUrl);
+        const data = response.data;
+        setPoliceStations(data);
+      } catch (error) {
+        console.error('Error fetching police stations:', error);
+      }
+    };
 
-const AdminLanding = ({navigation}) => {
+    fetchPoliceStations();
+  }, []);
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.sectionContainer}>
         <Text style={styles.sectionTitle}>Registered Police Stations</Text>
-        {topRatedPoliceStations.map(station => (
-          <TouchableOpacity key={station.id} style={styles.policeStationCard} onPress={() => {navigation.navigate('StationDetails')}}>
-            <Image source={{uri: station.image}} style={styles.cardImage} />
+        {policeStations.map((station, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.policeStationCard}
+            onPress={() => {
+              navigation.navigate('StationDetails', { station });
+            }}
+          >
+            <Image source={{ uri: station.image }} style={styles.cardImage} />
             <View style={styles.policeTextContainer}>
               <Text style={styles.cardTitle}>{station.name}</Text>
-              <Text
-                style={styles.cardRating}>{`Rating: ${station.rating}`}</Text>
+              <Text style={styles.cardRating}>{`Rating: ${station.overall_rating}`}</Text>
             </View>
           </TouchableOpacity>
         ))}
-      </View> 
+      </View>
     </ScrollView>
   );
 };

@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  TouchableOpacity,
+  ToastAndroid,
+  ActivityIndicator,
+} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import * as colors from '../components/color';
-import { ScrollView } from 'react-native';
+import {ScrollView} from 'react-native';
 
-const LoginScreen = ({ route, navigation }) => {
-  const { who } = route.params;
+const LoginScreen = ({route, navigation}) => {
+  const {who} = route.params;
   console.log(who);
 
   const [email, setEmail] = useState('');
@@ -20,7 +29,11 @@ const LoginScreen = ({ route, navigation }) => {
     try {
       setLoading(true); // Start loading
       await auth().signInWithEmailAndPassword(email, pass);
-      ToastAndroid.show('Logged in Successfully', ToastAndroid.SHORT, ToastAndroid.CENTER);
+      ToastAndroid.show(
+        'Logged in Successfully',
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
 
       // Navigate to the appropriate screen based on 'who'
       if (who === 'Admin') {
@@ -35,10 +48,18 @@ const LoginScreen = ({ route, navigation }) => {
     } catch (error) {
       // Handle authentication errors
       if (error.code === 'auth/invalid-email') {
-        ToastAndroid.show('Invalid email address!', ToastAndroid.SHORT, ToastAndroid.CENTER);
+        ToastAndroid.show(
+          'Invalid email address!',
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER,
+        );
       }
       if (error.code === 'auth/wrong-password') {
-        ToastAndroid.show('Invalid password!', ToastAndroid.SHORT, ToastAndroid.CENTER);
+        ToastAndroid.show(
+          'Invalid password!',
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER,
+        );
       }
       console.log(error);
     } finally {
@@ -47,7 +68,7 @@ const LoginScreen = ({ route, navigation }) => {
   };
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: colors.secondary }}>
+    <ScrollView style={{flex: 1, backgroundColor: colors.secondary}}>
       <View style={styles.container}>
         <View style={styles.UpperContainer}>
           <View style={styles.LabelConatiner}></View>
@@ -61,7 +82,7 @@ const LoginScreen = ({ route, navigation }) => {
             <TextInput
               style={styles.TextInputArea}
               value={email}
-              onChangeText={(text) => setEmail(text)}
+              onChangeText={text => setEmail(text)}
               placeholder="Email"
               backgroundColor={colors.secondary}
               placeholderTextColor="#3d5c5c"
@@ -69,7 +90,7 @@ const LoginScreen = ({ route, navigation }) => {
             <TextInput
               style={styles.TextInputArea}
               value={pass}
-              onChangeText={(text) => setPass(text)}
+              onChangeText={text => setPass(text)}
               placeholder="Password"
               secureTextEntry={true}
               backgroundColor={colors.secondary}
@@ -85,7 +106,13 @@ const LoginScreen = ({ route, navigation }) => {
               color="#000"
               disabled={loading} // Disable the button while loading
             />
-            {loading && <ActivityIndicator size="small" color="#000" style={{ marginTop: 10 }} />} 
+            {loading && (
+              <ActivityIndicator
+                size="small"
+                color="#000"
+                style={{marginTop: 10}}
+              />
+            )}
           </View>
         </View>
 
@@ -94,7 +121,12 @@ const LoginScreen = ({ route, navigation }) => {
             <View style={styles.AskLoginContainer}>
               <Text style={styles.txt}>
                 Don't have an account?{' '}
-                <TouchableOpacity onPress={() => navigation.replace('SignUp')}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.replace(
+                      who === 'Police' ? 'RegisterPolice' : 'SignUp',
+                    )
+                  }>
                   <Text style={styles.login}> Create One!</Text>
                 </TouchableOpacity>
               </Text>

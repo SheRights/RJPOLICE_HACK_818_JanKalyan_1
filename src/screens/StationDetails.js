@@ -58,7 +58,7 @@ const StarRating = ({rating, starSize = 20, starColor = '#000'}) => {
   return <View style={{flexDirection: 'row'}}>{stars}</View>;
 };
 
-const StationDetails = () => {
+const StationDetails = ({navigation}) => {
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -88,7 +88,7 @@ const StationDetails = () => {
             <Text style={styles.floatingButtonText}>Feedbacks</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.floatingButton}>
-            <Text style={styles.floatingButtonText}>Insights</Text>
+            <Text style={styles.floatingButtonText} onPress={()=>{navigation.navigate('FeedbackReport')}}>Reports</Text>
           </TouchableOpacity>
         </View>
 

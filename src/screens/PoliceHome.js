@@ -1,48 +1,55 @@
+import React, { useState, useEffect } from 'react';
 import {
-    View,
-    TextInput,
-    StyleSheet,
-    Image,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    Dimensions,
-  } from 'react-native';
-  import React from 'react';
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Dimensions,
+  StyleSheet,
+} from 'react-native';
+import * as Progress from 'react-native-progress';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import axios from 'axios'; // Import Axios
+import * as colors from '../components/color'
+import auth from '@react-native-firebase/auth'; // Import Firebase Auth
+
+
+const { width, height } = Dimensions.get('window');
+
+const PoliceHome = ({ navigation }) => {
+  const [stationData, setStationData] = useState({
+    description: '',
+    email: '',
+    image: '',
+    mean_rating: 0,
+    name: '',
+    password: '',
+    subcollection_data: [{}],
+  });
+
   
-  const {width, height} = Dimensions.get('window');
-  
-  import * as colors from '../components/color';
-  import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-  import * as Progress from 'react-native-progress';
-  
-  const recentFeedbacks = [
-    {
-      id: 1,
-      userName: 'Username 1',
-      image:
-        'https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      feedback: 'Great experience with the police station!',
-    },
-    {
-      id: 2,
-      userName: 'Username 2',
-      image:
-        'https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      feedback: 'Quick response and helpful staff.',
-    },
-    {
-      id: 3,
-      userName: 'Username 3',
-      image:
-        'https://images.unsplash.com/photo-1588516903720-8ceb67f9ef84?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      feedback: 'Could improve the waiting time.',
-    },
-  ];
-  
-  const StarRating = ({rating, starSize = 20, starColor = '#000'}) => {
+  useEffect(() => {
+    const fetchStationData = async () => {
+      try {
+        const user = auth().currentUser;
+        if (user) {
+          const userEmail = user.email;
+          const apiUrl = `https://aawaz-backend-pthakare72003.replit.app/user/spec_station/${userEmail}`;
+          const response = await axios.get(apiUrl);
+          const data = response.data;
+          setStationData(data);
+        }
+      } catch (error) {
+        console.error('Error fetching station data:', error);
+      }
+    };
+
+    fetchStationData();
+  }, []); 
+  const StarRating = ({ rating, starSize = 20, starColor = '#000' }) => {
     const stars = [];
-  
+
     for (let i = 0; i < rating; i++) {
       stars.push(
         <FontAwesome5Icon
@@ -54,57 +61,53 @@ import {
         />,
       );
     }
-  
-    return <View style={{flexDirection: 'row'}}>{stars}</View>;
+
+    return <View style={{ flexDirection: 'row' }}>{stars}</View>;
   };
-  
-  const PoliceHome = ({navigation}) => {
-    return (
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.topContainer}>
-            <Image
-              source={{uri: 'https://i.ibb.co/2YhGBzB/center.jpg'}}
-              style={styles.StationImage}
-            />
-            <View style={styles.stationDetailsContainer}>
-              <Text style={styles.stationName}>Bibwewadi Police Station</Text>
-              <Text style={styles.stationAddr}>Bibwewadi, Pune</Text>
-            </View>
+
+
+  return (
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.topContainer}>
+          <Image source={{ uri: stationData.image }} style={styles.StationImage} />
+          <View style={styles.stationDetailsContainer}>
+            <Text style={styles.stationName}>{stationData.name}</Text>
+            <Text style={styles.stationAddr}>{stationData.email}</Text>
           </View>
-  
-          <View style={styles.aboutContainer}>
-            <Text style={styles.aboutTextTitle}>About police station</Text>
-            <Text style={[styles.aboutTextDesc, {flexWrap: 'wrap'}]}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-            </Text>
-          </View>
-  
-          <View style={styles.floatingButtonsContainer}>
-            <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('AllCases')}>
-              <Text style={styles.floatingButtonText}>View Cases</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.floatingButton}>
-              <Text style={styles.floatingButtonText}>Feedbacks</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.floatingButton}>
-              <Text style={styles.floatingButtonText}>Insights</Text>
-            </TouchableOpacity>
-          </View>
-  
-          <View style={styles.ratingAndReviewContainer}>
-            <Text style={styles.ratingAndReviewText}>Ratings And Reviews</Text>
-            <View style={styles.ratingContentContainer}>
-              <View style={styles.ratingContainer}>
-                <View style={styles.ratingStarTextContainer}>
-                  <Text style={styles.ratingText}>4.0</Text>
-                  <View style={styles.ratingStarContainer}>
-                    <StarRating rating={4} />
-                  </View>
+        </View>
+
+        <View style={styles.aboutContainer}>
+          <Text style={styles.aboutTextTitle}>About police station</Text>
+          <Text style={[styles.aboutTextDesc, { flexWrap: 'wrap' }]}>{stationData.description}</Text>
+        </View>
+
+        <View style={styles.floatingButtonsContainer}>
+          <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('AllCases')}>
+            <Text style={styles.floatingButtonText}>View Cases</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.floatingButton}>
+            <Text style={styles.floatingButtonText}>Feedbacks</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.floatingButton}>
+            <Text style={styles.floatingButtonText}>Insights</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.ratingAndReviewContainer}>
+          <Text style={styles.ratingAndReviewText}>Ratings And Reviews</Text>
+          <View style={styles.ratingContentContainer}>
+            <View style={styles.ratingContainer}>
+              <View style={styles.ratingStarTextContainer}>
+                <Text style={styles.ratingText}>{stationData.mean_rating}</Text>
+                <View style={styles.ratingStarContainer}>
+                  {/* Assuming mean_rating is a number */}
+                  <StarRating rating={Math.round(stationData.mean_rating)} />
                 </View>
               </View>
-  
-              <View style={styles.progBarContainer}>
+            </View>
+
+            <View style={styles.progBarContainer}>
                 <View style={styles.progBar}>
                   <Text style={styles.progBarText}>1</Text>
                   <Progress.Bar progress={0.3} width={200} color="black" />
@@ -126,47 +129,40 @@ import {
                   <Progress.Bar progress={0.1} width={200} color="black" />
                 </View>
               </View>
-            </View>
-          </View>
-  
-          <View style={styles.feedbacksContainer}>
-            <ScrollView horizontal={true}>
-              <View style={styles.feedbackCards}>
-                {recentFeedbacks.map(feedback => (
-                  <View key={feedback.id} style={styles.feedbackCard}>
-                    <View style={styles.feedbackImageNameContainer}>
-                      <Image
-                        source={{uri: feedback.image}}
-                        style={styles.feedbackImage}
-                      />
-                      <Text style={styles.userName}>{feedback.userName}</Text>
-                    </View>
-                    <View style={styles.ActualFeedbackContainer}>
-                      <Text style={styles.actualfeedback}>
-                        {feedback.feedback}
-                      </Text>
-                    </View>
-                    <View style={styles.IconsContainer}>
-                      <FontAwesome5Icon name="thumbs-up" size={20} color="#000" />
-                      <FontAwesome5Icon
-                        name="thumbs-down"
-                        size={20}
-                        color="#000"
-                      />
-                      <FontAwesome5Icon name="reply-all" size={20} color="#000" />
-                      <FontAwesome5Icon name="comment" size={20} color="#000" />
-                    </View>
-                  </View>
-                ))}
-              </View>
-            </ScrollView>
           </View>
         </View>
-      </ScrollView>
-    );
-  };
-  
-  export default PoliceHome;
+
+        <View style={styles.feedbacksContainer}>
+          <ScrollView horizontal={true}>
+            <View style={styles.feedbackCards}>
+              {stationData.subcollection_data.map((feedback, index) => (
+                <View key={index} style={styles.feedbackCard}>
+                  <View style={styles.feedbackImageNameContainer}>
+                    <Image source={{ uri: 'https://images.hindustantimes.com/rf/image_size_630x354/HT/p2/2019/07/18/Pictures/bikaner_f64af148-a927-11e9-bdb2-acd0277ecbef.jpg' }} style={styles.feedbackImage} />
+                    <Text style={styles.userName}>{feedback.user_name}</Text>
+                  </View>
+                  <View style={styles.ActualFeedbackContainer}>
+                    <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>{feedback.station_name}</Text>
+                    <Text style={styles.actualfeedback}>{feedback.text}</Text>
+                  </View>
+                  <View style={styles.IconsContainer}>
+                    <FontAwesome5Icon name="thumbs-up" size={20} color="#000" />
+                    <FontAwesome5Icon name="thumbs-down" size={20} color="#000" />
+                    <FontAwesome5Icon name="reply-all" size={20} color="#000" />
+                    <FontAwesome5Icon name="comment" size={20} color="#000" />
+                  </View>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
+
+export default PoliceHome;
+
   
   const styles = StyleSheet.create({
     container: {
