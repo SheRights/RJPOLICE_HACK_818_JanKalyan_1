@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {
   Dimensions,
   Image,
@@ -7,26 +8,67 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import axios from 'axios'; // Import Axios library
 
 import * as colors from '../components/color';
 import * as Progress from 'react-native-progress';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const rowData = [
-  {title: 'Justice', progress: 0.3},
-  {title: 'Co-operation', progress: 0.5},
-  {title: 'Availability', progress: 0.8},
-  {title: 'Behaviour', progress: 0.2},
+  { title: 'Justice', progress: 0.3 },
+  { title: 'Co-operation', progress: 0.5 },
+  { title: 'Availability', progress: 0.8 },
+  { title: 'Behaviour', progress: 0.2 },
+];
+
+const data = [
+  { text: "The police station staff was very helpful and courteous." },
+  { text: "I appreciate the prompt response and professionalism of the officers." },
+  { text: "Had a positive experience. The officers were understanding and supportive." },
+  { text: "Unpleasant encounter with a rude officer. Needs improvement in behavior." },
+  { text: "The facilities were clean and well-maintained. Good overall service." }
 ];
 
 const FeedbackReport = () => {
+  const [showDetails, setShowDetails] = useState(false);
+  const [summaryData, setSummaryData] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  const toggleDetails = async () => {
+    setShowDetails(!showDetails);
+
+    if (!showDetails) {
+      try {
+        setIsLoading(true);
+
+        // Send a POST request to the API with the data array
+        const response = await axios.post(
+          'https://aawaz-backend-pthakare72003.replit.app/user/generate_summary',
+          { data }
+        );
+
+        setSummaryData(response.data);
+      } catch (error) {
+        console.error('Error fetching summary data:', error);
+        // Handle error (e.g., display an error message to the user)
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    // You can perform additional actions when summaryData changes
+    console.log('Summary Data:', summaryData);
+  }, [summaryData]);
+
   return (
     <ScrollView style={styles.container}>
+
       <View style={styles.topContainer}>
         <Image
-          source={{uri: 'https://i.ibb.co/2YhGBzB/center.jpg'}}
+          source={{ uri: 'https://i.ibb.co/2YhGBzB/center.jpg' }}
           style={styles.stationImage}
         />
         <View style={styles.stationDetailsContainer}>
@@ -35,30 +77,37 @@ const FeedbackReport = () => {
         </View>
       </View>
 
-      <View style={styles.aboutContainer}>
-        <Text style={styles.aboutTextTitle}>Summary Report</Text>
-        <Text style={styles.aboutTextDesc}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book.
+      <TouchableOpacity
+        style={styles.toggleButton}
+        onPress={toggleDetails}
+      >
+        <Text style={styles.toggleButtonText}>
+          {showDetails ? 'Hide Details' : 'Show Details'}
         </Text>
-      </View>
-
-      <View style={styles.progBarContainer}>
-        {rowData.map((item, index) => (
-          <View key={index} style={styles.progBar}>
-            <View style={styles.progBarTextContainer}>
-              <Text style={styles.progBarText}>{item.title}</Text>
-            </View>
-            <Progress.Bar progress={item.progress} width={200} color="#000" />
-          </View>
-        ))}
-      </View>
-
-      <TouchableOpacity style={styles.allFeedbackButton}>
-        <Text style={styles.allFeedbackButtonText}>See Feedbacks</Text>
       </TouchableOpacity>
+
+      {showDetails && (
+        <>
+          <View style={styles.aboutContainer}>
+            <Text style={styles.aboutTextTitle}>Summary Report</Text>
+            <Text style={styles.aboutTextDesc}>
+              {summaryData.summary || 'Loading summary...'}
+            </Text>
+          </View>
+
+          <View style={styles.progBarContainer}>
+            {rowData.map((item, index) => (
+              <View key={index} style={styles.progBar}>
+                <View style={styles.progBarTextContainer}>
+                  <Text style={styles.progBarText}>{item.title}</Text>
+                </View>
+                <Progress.Bar progress={item.progress} width={200} color="#000" />
+              </View>
+            ))}
+          </View>
+        </>
+      )}
+
     </ScrollView>
   );
 };
@@ -132,6 +181,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   allFeedbackButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  toggleButton: {
+    backgroundColor: '#000',
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  toggleButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',

@@ -1,54 +1,48 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import axios from 'axios';
 import * as colors from '../components/color';
 import SearchBar from '../components/SearchBar';
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-
-const rowData = [
-  {
-    caseno: '123456',
-    name: 'Prathamesh',
-    status: 'Pending',
-    message: '9112272004',
-    update: 'Update',
-  },
-  {
-    caseno: '123457',
-    name: 'Girish',
-    status: 'Pending',
-    message: '7843088689',
-    update: 'Update',
-  },
-  {
-    caseno: '123458',
-    name: 'Pratham',
-    status: 'Pending',
-    message: '9221412004',
-    update: 'Update',
-  },
-  {
-    caseno: '123459',
-    name: 'Mohit',
-    status: 'Pending',
-    message: '9112272004',
-    update: 'Update',
-  },
-];
 
 const AllCases = () => {
+  const [allCases, setAllCases] = useState([]);
+  const [dataFetched, setDataFetched] = useState(false);
+
+  const fetchData = useCallback(() => {
+    try {
+      axios
+        .get('https://aawaz-backend-pthakare72003.replit.app/user/get_cases/jaipurpolice@gov.in')
+        .then(response => setAllCases(response.data))
+        .catch(error => console.error('Error fetching cases:', error));
+    } catch (error) {
+      console.error('An unexpected error occurred:', error);
+    } finally {
+      setDataFetched(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!dataFetched) {
+      fetchData();
+    }
+  }, [dataFetched, fetchData]);
+
+  const sendSms = async (phoneNumber) => {
+    try {
+      const response = await axios.post('https://aawaz-backend-pthakare72003.replit.app/user/send_sms', {
+        to_phone_number: phoneNumber,
+      });
+      console.log('SMS sent successfully:', response.data);
+    } catch (error) {
+      console.error('Error sending SMS:', error);
+    }
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.searchBarContainer}>
-        <SearchBar
-          placeholder="Search Case By Case Number"
-          onSearch={text => console.log(text)}
-        />
+        <SearchBar placeholder="Search Case By Case Number" onSearch={text => console.log(text)} />
       </View>
 
       <View style={styles.contentContainer}>
@@ -72,28 +66,26 @@ const AllCases = () => {
         <View style={styles.separator}></View>
 
         <View style={styles.rowsContainer}>
-          {rowData.map((item, index) => (
+          {allCases.map((item, index) => (
             <View key={index} style={styles.row}>
               <View style={styles.column}>
-                <Text style={styles.rowText}>{item.caseno}</Text>
+                <Text style={styles.rowText}>{item.case_number}</Text>
               </View>
               <View style={styles.column}>
-                <Text style={styles.rowText}>{item.name}</Text>
+                <Text style={styles.rowText}>{item.victim_name}</Text>
               </View>
               <View style={styles.column}>
-                <Text style={styles.rowText}>{item.status}</Text>
+                <Text style={styles.rowText}>{item.case_status}</Text>
               </View>
               <View style={styles.column}>
                 <TouchableOpacity
                   style={styles.messageButton}
-                  onPress={() => console.log(item.message)}>
-                  <Text style={{fontSize: 12, color: '#fff'}}>Message</Text>
+                  onPress={() => sendSms(item.victim_contact)}>
+                  <Text style={{ fontSize: 12, color: '#fff' }}>Message</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.column}>
-                <TouchableOpacity
-                  style={styles.updateButton}
-                  onPress={() => console.log(item.update)}>
+                <TouchableOpacity style={styles.updateButton} onPress={() => console.log(item.update)}>
                   <FontAwesome5Icon name="edit" size={20} color={'#000'} />
                 </TouchableOpacity>
               </View>
@@ -143,7 +135,6 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 12,
   },
-
   messageButton: {
     backgroundColor: '#000',
     borderRadius: 5,
