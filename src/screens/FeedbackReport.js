@@ -1,19 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Dimensions,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import axios from 'axios'; // Import Axios library
-
-import * as colors from '../components/color';
+import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import axios from 'axios';
 import * as Progress from 'react-native-progress';
+import * as colors from '../components/color';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const rowData = [
   { title: 'Justice', progress: 0.3 },
@@ -22,19 +13,59 @@ const rowData = [
   { title: 'Behaviour', progress: 0.2 },
 ];
 
-const data = [
-  { text: "The police station staff was very helpful and courteous." },
-  { text: "I appreciate the prompt response and professionalism of the officers." },
-  { text: "Had a positive experience. The officers were understanding and supportive." },
-  { text: "Unpleasant encounter with a rude officer. Needs improvement in behavior." },
-  { text: "The facilities were clean and well-maintained. Good overall service." }
-];
+const FeedbackReport = ({ navigation, route }) => {
+  // Extract the station email from the route params
+  const stationEmail = route.params.station;
 
-const FeedbackReport = () => {
+  // State to manage the visibility of details
   const [showDetails, setShowDetails] = useState(false);
+
+  // State to store the summary data
   const [summaryData, setSummaryData] = useState({});
+
+  // State to store the specific station details
+  const [stationDetails, setStationDetails] = useState({});
+
+  // State to store feedback data
+  const [feedbackData, setFeedbackData] = useState([]);
+
+  // State to manage loading state
   const [isLoading, setIsLoading] = useState(false);
 
+  // useEffect to fetch police station details and feedback data when component mounts
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+
+        // Fetch specific station details using stationEmail
+        const stationDetailsResponse = await axios.get(
+          `https://aawaz-backend-pthakare72003.replit.app/user/spec_station/${stationEmail}`
+        );
+
+        // Update the stationDetails state with fetched data
+        setStationDetails(stationDetailsResponse.data);
+
+        // Fetch feedback data for the specific station
+        const feedbackResponse = await axios.get(
+          `https://aawaz-backend-pthakare72003.replit.app/user/feedback/${stationEmail}`
+        );
+
+        // Update the feedbackData state with fetched data
+        setFeedbackData(feedbackResponse.data.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Handle error (e.g., display an error message to the user)
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    // Call the fetchData function
+    fetchData();
+  }, [stationEmail]);
+
+  // Function to toggle the visibility of details
   const toggleDetails = async () => {
     setShowDetails(!showDetails);
 
@@ -42,15 +73,16 @@ const FeedbackReport = () => {
       try {
         setIsLoading(true);
 
-        // Send a POST request to the API with the data array
+        // Send a POST request to the API with the feedbackData array
         const response = await axios.post(
           'https://aawaz-backend-pthakare72003.replit.app/user/generate_summary',
-          { data }
+          { data: feedbackData }
         );
 
+        // Update the summaryData state with fetched data
         setSummaryData(response.data);
       } catch (error) {
-        console.error('Error fetching summary data:', error);
+        console.error('Error fetching data:', error);
         // Handle error (e.g., display an error message to the user)
       } finally {
         setIsLoading(false);
@@ -58,25 +90,27 @@ const FeedbackReport = () => {
     }
   };
 
+  // useEffect to perform actions when summaryData changes
   useEffect(() => {
-    // You can perform additional actions when summaryData changes
     console.log('Summary Data:', summaryData);
+    // Additional actions if needed
   }, [summaryData]);
 
   return (
     <ScrollView style={styles.container}>
-
+      {/* Top container containing station image and details */}
       <View style={styles.topContainer}>
         <Image
-          source={{ uri: 'https://i.ibb.co/2YhGBzB/center.jpg' }}
+          source={{ uri: stationDetails.image }}
           style={styles.stationImage}
         />
         <View style={styles.stationDetailsContainer}>
-          <Text style={styles.stationName}>Bibwewadi Police Station</Text>
-          <Text style={styles.stationAddr}>Bibwewadi, Pune</Text>
+          <Text style={styles.stationName}>{stationDetails.name}</Text>
+          <Text style={styles.stationAddr}>{stationEmail}</Text>
         </View>
       </View>
 
+      {/* Toggle button to show/hide details */}
       <TouchableOpacity
         style={styles.toggleButton}
         onPress={toggleDetails}
@@ -86,8 +120,10 @@ const FeedbackReport = () => {
         </Text>
       </TouchableOpacity>
 
+      {/* Details section */}
       {showDetails && (
         <>
+          {/* About container with summary report */}
           <View style={styles.aboutContainer}>
             <Text style={styles.aboutTextTitle}>Summary Report</Text>
             <Text style={styles.aboutTextDesc}>
@@ -95,6 +131,17 @@ const FeedbackReport = () => {
             </Text>
           </View>
 
+          {/* Feedback data */}
+          <View style={styles.feedbackContainer}>
+            <Text style={styles.feedbackTitle}>Feedback Data</Text>
+            {feedbackData.map((item, index) => (
+              <Text key={index} style={styles.feedbackText}>
+                {item.text}
+              </Text>
+            ))}
+          </View>
+
+          {/* Progress bars for different criteria */}
           <View style={styles.progBarContainer}>
             {rowData.map((item, index) => (
               <View key={index} style={styles.progBar}>
@@ -107,7 +154,6 @@ const FeedbackReport = () => {
           </View>
         </>
       )}
-
     </ScrollView>
   );
 };
@@ -156,6 +202,19 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 5,
   },
+  feedbackContainer: {
+    marginTop: 15,
+  },
+  feedbackTitle: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  feedbackText: {
+    color: 'grey',
+    fontSize: 15,
+    marginTop: 5,
+  },
   progBarContainer: {
     alignItems: 'center',
     marginTop: 30,
@@ -172,18 +231,6 @@ const styles = StyleSheet.create({
   progBarText: {
     color: '#000',
     fontSize: 16,
-  },
-  allFeedbackButton: {
-    backgroundColor: '#000',
-    borderRadius: 10,
-    padding: 10,
-    marginTop: 30,
-    alignItems: 'center',
-  },
-  allFeedbackButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
   toggleButton: {
     backgroundColor: '#000',

@@ -32,6 +32,7 @@ import TestingScreen from './src/screens/TestingScreen';
 import EditProfile from './src/screens/EditProfile';
 import SmartChat from './src/screens/SmartChat';
 import RegisterPolice from './src/screens/Registerpolice';
+import Feedbacks from './src/screens/Feedbacks';
 
 import * as colors from './src/components/color';
 
@@ -365,6 +366,11 @@ const App = () => {
           options={{headerShown: false}}
           name="RegisterPolice"
           component={RegisterPolice}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="Feedbacks"
+          component={Feedbacks}
         />
       </Stack.Navigator>
     </NavigationContainer>

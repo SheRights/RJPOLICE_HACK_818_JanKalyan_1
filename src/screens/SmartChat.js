@@ -3,9 +3,14 @@ import { View, StyleSheet, StatusBar, ToastAndroid } from 'react-native';
 import { WebView } from 'react-native-webview';
 import axios from 'axios';
 
-const SmartChat = ({navigation}) => {
+const SmartChat = ({navigation, route}) => {
   const [chatBubbles, setChatBubbles] = useState([]);
   const intervalIdRef = useRef(null);
+
+  const station = route.params.policeStation;
+  const rating = route.params.rating;
+  console.log(station);
+  console.log(rating);
 
   const updateChatBubbles = () => {
     const injectedJavaScript = `
@@ -40,11 +45,11 @@ const SmartChat = ({navigation}) => {
     if (messageData.includes('exit ')) {
       console.log('Final Chat Bubbles:', chatBubbles);
       clearInterval(intervalIdRef.current);
+      // postFeedback(messageData); 
       ToastAndroid.show('Thank you for your time.. your feedback was submitted', ToastAndroid.SHORT);
       navigation.navigate('Bottomtab');
     } else {
       setChatBubbles(messageData);
-    //   postFeedback(messageData); 
     }
   };
 

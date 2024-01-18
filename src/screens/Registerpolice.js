@@ -17,6 +17,7 @@ const Registerpolice = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const [disctrict, setDistrict] = useState('');
 
   const signupfun = async () => {
     if (name === '' && email === '' && pass === '') {
@@ -52,7 +53,7 @@ const Registerpolice = ({ navigation }) => {
             ToastAndroid.SHORT,
             ToastAndroid.CENTER,
           );
-          navigation.replace('Login');
+          navigation.replace('Login', {who: 'Police'});
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
@@ -113,6 +114,14 @@ const Registerpolice = ({ navigation }) => {
             />
             <TextInput
               style={styles.TextInputArea}
+              value={disctrict}
+              onChangeText={text => setDistrict(text)}
+              placeholder="Enter District"
+              backgroundColor={colors.secondary}
+              placeholderTextColor="#3d5c5c"
+            />
+            <TextInput
+              style={styles.TextInputArea}
               value={pass}
               onChangeText={text => setPass(text)}
               placeholder="Enter Password"
@@ -120,6 +129,7 @@ const Registerpolice = ({ navigation }) => {
               placeholderTextColor="#3d5c5c"
               secureTextEntry={true}
             />
+            
           </View>
 
           <View style={styles.RegisterButtonConatiner}>

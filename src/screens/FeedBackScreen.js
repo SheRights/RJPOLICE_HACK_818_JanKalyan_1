@@ -86,7 +86,7 @@ const FeedBackScreen = () => {
   const fetchStations = async () => {
     try {
       const stationsSnapshot = await firestore().collection('stations').get();
-      const stationList = stationsSnapshot.docs.map((doc) => doc.data().name);
+      const stationList = stationsSnapshot.docs.map((doc) => doc.data().email);
       setStations(stationList);
     } catch (error) {
       console.error('Error fetching stations:', error);
